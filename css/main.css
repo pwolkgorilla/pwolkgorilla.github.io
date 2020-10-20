@@ -1,0 +1,27 @@
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 300px;
+    height: 30px;
+    font-size: 16px;
+}
+
+div.checkbox {
+    margin-top: 15px;
+}
+
+div.produkt {
+    border: 1px solid;
+    padding-bottom: 15px;
+    max-width: 500px;
+    margin: 10px auto;
+}
