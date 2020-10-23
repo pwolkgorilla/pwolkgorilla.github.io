@@ -15,11 +15,34 @@
     <p>Zamawiający</p>
     <input type="text" name="zamawiajacy" id="zamawiajacy" required>
 
+    <p>Odbiorca</p>
+    <div class="checkbox lista-express">
+        <label for="odbiorca-checkbox"><input type="checkbox" name="odbiorca-checkbox" id="odbiorca-checkbox" checked>
+            Ten sam, co zamawiający
+        </label>
+    </div>
+    <input type="text" name="odbiorca" id="odbiorca" required disabled>
+
     <p>Kraj</p>
     <label for="usa"><input type="radio" name="kraj" id="usa" value="USA" required>USA</label>
     <label for="de"><input type="radio" name="kraj" id="de" value="DE" required>DE</label>
     <label for="uk"><input type="radio" name="kraj" id="uk" value="UK" required>UK</label>
     <label for="pl"><input type="radio" name="kraj" id="pl" value="PL" required>PL</label>
+    <label for="nl"><input type="radio" name="kraj" id="nl" value="NL" required>NL</label>
+    <label for="be"><input type="radio" name="kraj" id="be" value="BE" required>BE</label>
+    <label for="ch"><input type="radio" name="kraj" id="ch" value="CH" required>CH</label>
+    <label for="no"><input type="radio" name="kraj" id="no" value="NO" required>NO</label>
+    <label for="fr"><input type="radio" name="kraj" id="fr" value="FR" required>FR</label>
+    <label for="au"><input type="radio" name="kraj" id="au" value="AU" required>AU</label>
+    <label for="at"><input type="radio" name="kraj" id="at" value="AT" required>AT</label>
+    <label for="ca"><input type="radio" name="kraj" id="ca" value="CA" required>CA</label>
+    <label for="kraj-inny"><input type="radio" name="kraj" id="kraj-inny" value="Inny: " required>Inny: </label>
+    <input type="text" name="kraj-inny-input" required disabled>
+    <div class="checkbox export">
+        <label for="export-checkbox"><input type="checkbox" name="export-checkbox" id="export-checkbox">
+            Export
+        </label>
+    </div>
 
     <p>Data zamówienia</p>
     <input type="text" name="data-zamowienia" required>
@@ -27,13 +50,17 @@
     <p>Numer zamówienia</p>
     <input type="text" name="numer-zamowienia" required>
 
+    <p>Kwota</p>
+    <input type="text" name="kwota-zamowienia" required>
+
     <p>Waluta</p>
     <label for="eur"><input type="radio" name="waluta" id="eur" value="EUR" required>EUR</label>
     <label for="pln"><input type="radio" name="waluta" id="pln" value="PLN" required>PLN</label>
+    <label for="usd"><input type="radio" name="waluta" id="usd" value="USD" required>USD</label>
 
     <div class="checkbox zaplacono">
-        <label for="zaplacono"><input type="checkbox" name="zaplacono" id="zaplacono" value="tak">Zapłacono</label>
-        <input type="text" name="zaplacono-data" disabled>
+        <label>Zapłacono</label>
+        <input type="text" name="zaplacono-data">
     </div>
 
     <p>Źródło zamówienia</p>

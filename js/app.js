@@ -3,11 +3,15 @@ window.jsPDF = window.jspdf.jsPDF;
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
 const BUTTON_WYCZYSC_PRODUKTY = $('button#wyczysc-produkty');
-const CHECKBOX_ZAPLACONO = $('#zaplacono');
 const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
 const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
 const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
+const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
+const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
+const ODBIORCA_CHECKBOX = $('input[name="odbiorca-checkbox"]');
+const ODBIORCA_INPUT = $('input#odbiorca');
+const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
 
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
 let licznikPolek = 0;
@@ -18,9 +22,34 @@ let licznikStopni = 0;
 // DANE OPERACYJNE (DO RENDEROWANIA PDF)
 let PDF = new jsPDF('p', 'pt');
 
-let biezacaWysokosc = 180;
+let biezacaWysokosc = 50;
 let biezacyLewyMargines = 60;
 let czyJestFalaWRzedzie = false;
+
+// OZYWIENIE PRZYCISKÓW 'KRAJ'
+KRAJ_RADIO_BUTTONY.change((event) => {
+    $('input#kraj-inny').is(':checked') ? KRAJ_INNY_INPUT.prop('disabled', false) : KRAJ_INNY_INPUT.prop('disabled', true);
+
+    switch (event.target.id) {
+        case 'usa':
+        case 'au':
+        case 'ca':
+            EXPORT_CHECKBOX.prop('checked', true);
+            break;
+        default:
+            EXPORT_CHECKBOX.prop('checked', false);
+            break;
+    }
+});
+
+// OZYWIENIE PRZYCISKU 'ODBIORCA'
+ODBIORCA_CHECKBOX.change(() => {
+    if (ODBIORCA_CHECKBOX.is(':checked')) {
+        ODBIORCA_INPUT.prop('disabled', true);
+    } else {
+        ODBIORCA_INPUT.prop('disabled', false);
+    }
+});
 
 // TWORZENIE NOWEJ POLKI
 const stworzNowaPolke = () => {
@@ -35,6 +64,7 @@ const stworzNowaPolke = () => {
         </div>
     `);
     renderujKsztalt(licznikPolek);
+    dodajPrzyciskUsun('#polka-numer-'+licznikPolek);
 };
 
 const renderujKsztalt = (idNumer) => {
@@ -122,6 +152,8 @@ const stworzNowyMaterac = () => {
             <label for="${licznikMateracy}-materac-niebieski"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-niebieski" value="Niebieski" required>Niebieski</label>
         </div>
     `);
+
+    dodajPrzyciskUsun('#materac-numer-'+licznikMateracy);
 };
 
 // TWORZENIE NOWEGO STOPNIA
@@ -144,25 +176,36 @@ const stworzNowyStopien = () => {
             <label for="${licznikStopni}-stopien-oslona-niebieski"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-niebieski" value="Niebieski" required>Niebieski</label>
         </div>
     `);
+
+    dodajPrzyciskUsun('#stopien-numer-'+licznikStopni);
 };
 
-// ZAPŁACONO
-CHECKBOX_ZAPLACONO.change(() => {
-    if (CHECKBOX_ZAPLACONO.prop('checked')) {
-        DATEPICKER_ZAPLACONO.prop('disabled', false);
-    } else {
-        DATEPICKER_ZAPLACONO.prop('disabled', true);
-    }
-});
+// DODAWANIE DELETE BUTTONA
+const dodajPrzyciskUsun = (selektor) => {
+    $(selektor).append(`
+        <br>
+        <button class="usun-produkt">Usuń produkt</button>
+    `);
 
-// DATEPICKER KONFIGURACJA
-$.datepicker.setDefaults({
-    dateFormat: 'd-m-yy',
-    dayNamesMin: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'],
-    firstDay: 1,
-    showOtherMonths: true,
-    monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
-});
+    $(selektor + ' button.usun-produkt').click(() => {
+        $(selektor).remove();
+
+        switch (true) {
+            case selektor.startsWith('#stopien'):
+                licznikStopni--;
+                break;
+            case selektor.startsWith('#materac'):
+                licznikMateracy--;
+                break;
+            case selektor.startsWith('#polka'):
+                licznikPolek--;
+                break;
+            case selektor.startsWith('#domek'):
+                licznikDomkow--;
+                break;
+        }
+    });
+};
 
 const drukujPDF = () => {
     drukujDaneOgolne();
@@ -174,23 +217,28 @@ const drukujPDF = () => {
 
 const drukujDaneOgolne = () => {
     const ZAMAWIAJACY = $('#zamawiajacy').val();
-    const KRAJ = $('input[name="kraj"]:checked').val();
+    const ODBIORCA = !ODBIORCA_CHECKBOX.is(':checked') ? $('#odbiorca').val() : 'Ten sam';
+    const KRAJ = $('#kraj-inny').is(':checked') ? $('input[name="kraj-inny-input"]').val() : $('input[name="kraj"]:checked').val();
     const DATA = $('input[name="data-zamowienia"]').val();
     const NUMER = $('input[name="numer-zamowienia"]').val();
+    const KWOTA = $('input[name="kwota-zamowienia"]').val();
     const WALUTA = $('input[name="waluta"]:checked').val();
     const ZRODLO = $('input[name="zrodlo-zamowienia"]:checked').val();
-    const ZAPLACONO = $('input[name="zaplacono"]').is(':checked') ? $('input[name="zaplacono-data"]').val() : '_______';
+    const ZAPLACONO = $('input[name="zaplacono-data"]').val() || '';
     const ZAPYTANIE = $('input[name="zapytanie-telefon-dodatki"]').is(':checked') ? 'TAK' : 'NIE';
     const LISTA_EXPRESS = $('input[name="lista-express"]').is(':checked') ? 'TAK' : 'NIE';
 
     stworzTabele(
-        [['Zamawiający', 'Kraj', 'Data', 'Numer', 'Waluta']],
-        [[ZAMAWIAJACY, KRAJ, DATA, NUMER, WALUTA]]
+        [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
+        [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
     );
     stworzTabele(
         [['Źródło zamówienia', 'Zapłacono', 'Zapytanie o telefon/dodatki', 'Lista express']],
-        [[ZRODLO, ZAPLACONO, ZAPYTANIE, LISTA_EXPRESS]]
+        [[ZRODLO, ZAPLACONO, ZAPYTANIE, LISTA_EXPRESS]],
+        60
     );
+
+    biezacaWysokosc += 60;
 };
 
 const drukujPolki = () => {
@@ -261,6 +309,7 @@ const drukujMaterace = () => {
 const drukujStopke = () => {
     const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val() || '\n \n \n';
     const DATA_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]').val();
+    biezacaWysokosc = 630;
 
     stworzTabele(
         [['Uwagi do zamówienia']],
@@ -268,11 +317,24 @@ const drukujStopke = () => {
     );
     stworzTabele(
         [['Wysłać do dnia', 'Waga paczki', 'Wysłano dnia', 'Przewoźnik']],
-        [[DATA_WYSLAC_DO_DNIA, '', '', '']]
+        [[DATA_WYSLAC_DO_DNIA, '', '', '']],
+        100,
+        300
     );
+
+    if (EXPORT_CHECKBOX.is(':checked')) {
+        stworzTabele(
+            [['Export']],
+            [['']],
+            0,
+            100,
+            450
+        );
+    }
 };
 
-const stworzTabele = (zbiorHead, zbiorBody) => {
+const stworzTabele = (zbiorHead, zbiorBody, wzrostWysokosci, tableWidth, lewyMargines) => {
+    biezacaWysokosc += wzrostWysokosci || 0;
     PDF.autoTable({
         head: zbiorHead,
         body: zbiorBody,
@@ -283,8 +345,9 @@ const stworzTabele = (zbiorHead, zbiorBody) => {
             lineColor: 0,
             lineWidth: 1
         },
-        tableWidth: 490,
-        margin: { left: 60 },
+        startY: biezacaWysokosc,
+        tableWidth: tableWidth || 490,
+        margin: { left: lewyMargines || 60 },
         headStyles: {
             font: 'Roboto-Bold',
             fontStyle: 'bold'
@@ -330,6 +393,15 @@ const skorygujPolozenieTabeli = () => {
     }
 };
 
+// DATEPICKER KONFIGURACJA
+$.datepicker.setDefaults({
+    dateFormat: 'd-m-yy',
+    dayNamesMin: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'],
+    firstDay: 1,
+    showOtherMonths: true,
+    monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
+});
+
 // DATA ZAMOWIENIA
 DATEPICKER_DATA_ZAMOWIENIA.datepicker();
 
@@ -363,7 +435,7 @@ BUTTON_DODAJ_PRODUKT.click((event) => {
 // CZYSZCZENIE DANYCH OPERACYJNYCH DO GENEROWANIA PDF
 const wyczyscDaneOperacyjnePDF = () => {
     biezacyLewyMargines = 60;
-    biezacaWysokosc = 180;
+    biezacaWysokosc = 50;
     czyJestFalaWRzedzie = false;
 };
 
