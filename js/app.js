@@ -50,6 +50,7 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
         case '4mypetshop':
         case 'allegro':
             $('#pln').prop('checked', 'true');
+            $('#pl').prop('checked', 'true');
             break;
         case 'ebay-uk':
             $('#gbp').prop('checked', 'true');
