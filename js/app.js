@@ -31,9 +31,9 @@ let biezacyLewyMargines = 60;
 let czyJestFalaWRzedzie = false;
 
 // USTAWIENIA STRONY
-$(document).ready(function(){
-    $(this).scrollTop(0);
-});
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+};
 
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
