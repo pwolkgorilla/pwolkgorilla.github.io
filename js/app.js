@@ -8,6 +8,8 @@ const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
 const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
 const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
+const KONTENER_NUMER_ZAMOWIENIA = $('div.kontener-numer-zamowienia');
+const NUMER_ZAMOWIENIA = $('input[name="numer-zamowienia"]');
 const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
 const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
 const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
@@ -51,6 +53,14 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
             break;
     }
     WALUTA_INNA_INPUT.prop('disabled', true);
+
+    if (event.target.id === '4mypet' || event.target.id === '4mypetshop') {
+        KONTENER_NUMER_ZAMOWIENIA.show();
+        NUMER_ZAMOWIENIA.prop('required', 'true');
+    } else {
+        KONTENER_NUMER_ZAMOWIENIA.hide();
+        NUMER_ZAMOWIENIA.prop('required', 'false');
+    }
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
@@ -138,11 +148,11 @@ const renderujAtrybuty = (ksztaltPolki, idNumer) => {
                 <label for="${idNumer}-dlugosc-95"><input type="radio" name="${idNumer}-dlugosc" id="${idNumer}-dlugosc-95" value="95 cm" required>95 cm</label>
                 <label for="${idNumer}-dlugosc-100"><input type="radio" name="${idNumer}-dlugosc" id="${idNumer}-dlugosc-100" value="100 cm" required>100 cm</label>
                 <p>Symetria</p>
-                <label for="${idNumer}-symetryczna"><input type="radio" name="${idNumer}-symetria" id="${idNumer}-symetryczna" value="Symetryczna" required>Symetryczna</label>
-                <label for="${idNumer}-asymetryczna"><input type="radio" name="${idNumer}-symetria" id="${idNumer}-asymetryczna" value="Asymetryczna" required>Asymetryczna</label>
+                <label for="${idNumer}-symetryczna"><input type="radio" name="${idNumer}-symetria" id="${idNumer}-symetryczna" value="Symetryczna">Symetryczna</label>
+                <label for="${idNumer}-asymetryczna"><input type="radio" name="${idNumer}-symetria" id="${idNumer}-asymetryczna" value="Asymetryczna">Asymetryczna</label>
                 <p>Strona</p>
-                <label for="${idNumer}-lewa"><input type="radio" name="${idNumer}-strona" id="${idNumer}-lewa" value="Lewa" required>Lewa</label>
-                <label for="${idNumer}-prawa"><input type="radio" name="${idNumer}-strona" id="${idNumer}-prawa" value="Prawa" required>Prawa</label>
+                <label for="${idNumer}-lewa"><input type="radio" name="${idNumer}-strona" id="${idNumer}-lewa" value="Lewa">Lewa</label>
+                <label for="${idNumer}-prawa"><input type="radio" name="${idNumer}-strona" id="${idNumer}-prawa" value="Prawa">Prawa</label>
         `);
             break;
     }
@@ -152,29 +162,29 @@ const renderujAtrybuty = (ksztaltPolki, idNumer) => {
 const renderujReszte = (idNumer) => {
     $('#atrybuty-polki-' + idNumer).append(`
         <p>Materac</p>
-        <label for="${idNumer}-polka-materac-kremowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-kremowy" value="Kremowy" required>Kremowy</label>
-        <label for="${idNumer}-polka-materac-bezowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-bezowy" value="Beżowy" required>Beżowy</label>
-        <label for="${idNumer}-polka-materac-brazowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-brazowy" value="Brązowy" required>Brązowy</label>
-        <label for="${idNumer}-polka-materac-czekoladowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-        <label for="${idNumer}-polka-materac-fioletowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-fioletowy" value="Fioletowy" required>Fioletowy</label>
-        <label for="${idNumer}-polka-materac-czerwony"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czerwony" value="Czerwony" required>Czerwony</label>
-        <label for="${idNumer}-polka-materac-granatowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-granatowy" value="Granatowy" required>Granatowy</label>
-        <label for="${idNumer}-polka-materac-popielaty"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-popielaty" value="Popielaty" required>Popielaty</label>
-        <label for="${idNumer}-polka-materac-antracytowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-antracytowy" value="Antracytowy" required>Antracytowy</label>
-        <label for="${idNumer}-polka-materac-czarny"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czarny" value="Czarny" required>Czarny</label>
-        <label for="${idNumer}-polka-materac-cappuccino"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-cappuccino" value="Cappucinno" required>Cappucinno</label>
+        <label for="${idNumer}-polka-materac-kremowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-kremowy" value="Kremowy">Kremowy</label>
+        <label for="${idNumer}-polka-materac-bezowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-bezowy" value="Beżowy">Beżowy</label>
+        <label for="${idNumer}-polka-materac-brazowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-brazowy" value="Brązowy">Brązowy</label>
+        <label for="${idNumer}-polka-materac-czekoladowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czekoladowy" value="Czekoladowy">Czekoladowy</label>
+        <label for="${idNumer}-polka-materac-fioletowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-fioletowy" value="Fioletowy">Fioletowy</label>
+        <label for="${idNumer}-polka-materac-czerwony"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czerwony" value="Czerwony">Czerwony</label>
+        <label for="${idNumer}-polka-materac-granatowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-granatowy" value="Granatowy">Granatowy</label>
+        <label for="${idNumer}-polka-materac-popielaty"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-popielaty" value="Popielaty">Popielaty</label>
+        <label for="${idNumer}-polka-materac-antracytowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-antracytowy" value="Antracytowy">Antracytowy</label>
+        <label for="${idNumer}-polka-materac-czarny"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czarny" value="Czarny">Czarny</label>
+        <label for="${idNumer}-polka-materac-cappuccino"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-cappuccino" value="Cappucinno">Cappucinno</label>
         <p>Podstawa</p>
-        <label for="${idNumer}-polka-podstawa-kremowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-kremowy" value="Kremowy" required>Kremowy</label>
-        <label for="${idNumer}-polka-podstawa-bezowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-bezowy" value="Beżowy" required>Beżowy</label>
-        <label for="${idNumer}-polka-podstawa-brazowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-brazowy" value="Brązowy" required>Brązowy</label>
-        <label for="${idNumer}-polka-podstawa-czekoladowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-        <label for="${idNumer}-polka-podstawa-fioletowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-fioletowy" value="Fioletowy" required>Fioletowy</label>
-        <label for="${idNumer}-polka-podstawa-czerwony"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czerwony" value="Czerwony" required>Czerwony</label>
-        <label for="${idNumer}-polka-podstawa-granatowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-granatowy" value="Granatowy" required>Granatowy</label>
-        <label for="${idNumer}-polka-podstawa-popielaty"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-popielaty" value="Popielaty" required>Popielaty</label>
-        <label for="${idNumer}-polka-podstawa-antracytowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-antracytowy" value="Antracytowy" required>Antracytowy</label>
-        <label for="${idNumer}-polka-podstawa-czarny"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czarny" value="Czarny" required>Czarny</label>
-        <label for="${idNumer}-polka-podstawa-cappuccino"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-cappuccino" value="Cappucinno" required>Cappucinno</label>
+        <label for="${idNumer}-polka-podstawa-kremowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-kremowy" value="Kremowy">Kremowy</label>
+        <label for="${idNumer}-polka-podstawa-bezowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-bezowy" value="Beżowy">Beżowy</label>
+        <label for="${idNumer}-polka-podstawa-brazowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-brazowy" value="Brązowy">Brązowy</label>
+        <label for="${idNumer}-polka-podstawa-czekoladowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czekoladowy" value="Czekoladowy">Czekoladowy</label>
+        <label for="${idNumer}-polka-podstawa-fioletowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-fioletowy" value="Fioletowy">Fioletowy</label>
+        <label for="${idNumer}-polka-podstawa-czerwony"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czerwony" value="Czerwony">Czerwony</label>
+        <label for="${idNumer}-polka-podstawa-granatowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-granatowy" value="Granatowy">Granatowy</label>
+        <label for="${idNumer}-polka-podstawa-popielaty"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-popielaty" value="Popielaty">Popielaty</label>
+        <label for="${idNumer}-polka-podstawa-antracytowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-antracytowy" value="Antracytowy">Antracytowy</label>
+        <label for="${idNumer}-polka-podstawa-czarny"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czarny" value="Czarny">Czarny</label>
+        <label for="${idNumer}-polka-podstawa-cappuccino"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-cappuccino" value="Cappucinno">Cappucinno</label>
     `);
 };
 
@@ -198,17 +208,17 @@ const stworzNowyMaterac = () => {
             <label for="${licznikMateracy}-dlugosc-95-materac"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-95-materac" value="95 cm" required>95 cm</label>
             <label for="${licznikMateracy}-dlugosc-100-materac"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-100-materac" value="100 cm" required>100 cm</label>
             <p>Kolor</p>
-            <label for="${licznikMateracy}-materac-kremowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-kremowy" value="Kremowy" required>Kremowy</label>
-            <label for="${licznikMateracy}-materac-bezowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-bezowy" value="Beżowy" required>Beżowy</label>
-            <label for="${licznikMateracy}-materac-brazowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-brazowy" value="Brązowy" required>Brązowy</label>
-            <label for="${licznikMateracy}-materac-czekoladowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-            <label for="${licznikMateracy}-materac-fioletowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-fioletowy" value="Fioletowy" required>Fioletowy</label>
-            <label for="${licznikMateracy}-materac-czerwony"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czerwony" value="Czerwony" required>Czerwony</label>
-            <label for="${licznikMateracy}-materac-granatowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-granatowy" value="Granatowy" required>Granatowy</label>
-            <label for="${licznikMateracy}-materac-popielaty"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-popielaty" value="Popielaty" required>Popielaty</label>
-            <label for="${licznikMateracy}-materac-antracytowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-antracytowy" value="Antracytowy" required>Antracytowy</label>
-            <label for="${licznikMateracy}-materac-czarny"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czarny" value="Czarny" required>Czarny</label>
-            <label for="${licznikMateracy}-materac-cappuccino"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-cappuccino" value="Cappucinno" required>Cappucinno</label>
+            <label for="${licznikMateracy}-materac-kremowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-kremowy" value="Kremowy">Kremowy</label>
+            <label for="${licznikMateracy}-materac-bezowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-bezowy" value="Beżowy">Beżowy</label>
+            <label for="${licznikMateracy}-materac-brazowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-brazowy" value="Brązowy">Brązowy</label>
+            <label for="${licznikMateracy}-materac-czekoladowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czekoladowy" value="Czekoladowy">Czekoladowy</label>
+            <label for="${licznikMateracy}-materac-fioletowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-fioletowy" value="Fioletowy">Fioletowy</label>
+            <label for="${licznikMateracy}-materac-czerwony"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czerwony" value="Czerwony">Czerwony</label>
+            <label for="${licznikMateracy}-materac-granatowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-granatowy" value="Granatowy">Granatowy</label>
+            <label for="${licznikMateracy}-materac-popielaty"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-popielaty" value="Popielaty">Popielaty</label>
+            <label for="${licznikMateracy}-materac-antracytowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-antracytowy" value="Antracytowy">Antracytowy</label>
+            <label for="${licznikMateracy}-materac-czarny"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czarny" value="Czarny">Czarny</label>
+            <label for="${licznikMateracy}-materac-cappuccino"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-cappuccino" value="Cappucinno">Cappucinno</label>
         </div>
     `);
 
@@ -225,26 +235,26 @@ const stworzNowyStopien = () => {
             <p>Liczba stopni</p>
             <input type="text" name="${licznikStopni}-liczba-stopni" value="1" required>
             <p>Filc</p>
-            <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy" required>Kremowy</label>
-            <label for="${licznikStopni}-stopien-filc-bezowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bezowy" value="Beżowy" required>Beżowy</label>
-            <label for="${licznikStopni}-stopien-filc-szaryjasny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryjasny" value="Jasny szary" required>Jasny szary</label>
-            <label for="${licznikStopni}-stopien-filc-szaryciemny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryciemny" value="Ciemny szary" required>Ciemny szary</label>
-            <label for="${licznikStopni}-stopien-filc-czarny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-czarny" value="Czarny" required>Czarny</label>
-            <label for="${licznikStopni}-stopien-filc-burgundowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-burgundowy" value="Burgundowy" required>Burgundowy</label>
-            <label for="${licznikStopni}-stopien-filc-niebieski"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-niebieski" value="Kobaltowy" required>Kobaltowy niebieski</label>
-            <label for="${licznikStopni}-stopien-filc-pomaranczowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-pomaranczowy" value="Pomarańczowy" required>Pomarańczowy</label>
+            <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy">Kremowy</label>
+            <label for="${licznikStopni}-stopien-filc-bezowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bezowy" value="Beżowy">Beżowy</label>
+            <label for="${licznikStopni}-stopien-filc-szaryjasny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryjasny" value="Jasny szary">Jasny szary</label>
+            <label for="${licznikStopni}-stopien-filc-szaryciemny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryciemny" value="Ciemny szary">Ciemny szary</label>
+            <label for="${licznikStopni}-stopien-filc-czarny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-czarny" value="Czarny">Czarny</label>
+            <label for="${licznikStopni}-stopien-filc-burgundowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-burgundowy" value="Burgundowy">Burgundowy</label>
+            <label for="${licznikStopni}-stopien-filc-niebieski"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-niebieski" value="Kobaltowy">Kobaltowy niebieski</label>
+            <label for="${licznikStopni}-stopien-filc-pomaranczowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-pomaranczowy" value="Pomarańczowy">Pomarańczowy</label>
             <p>Platforma</p>
-            <label for="${licznikStopni}-stopien-platforma-bialy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-bialy" value="Biały" required>Biały</label>
-            <label for="${licznikStopni}-stopien-platforma-szary"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-szary" value="Szary" required>Szary</label>
-            <label for="${licznikStopni}-stopien-platforma-karmelowy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-karmelowy" value="Karmelowy" required>Karmelowy</label>
-            <label for="${licznikStopni}-stopien-platforma-brazowy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-brazowy" value="Brązowy" required>Brązowy</label>
-            <label for="${licznikStopni}-stopien-platforma-czarny"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-czarny" value="Czarny" required>Czarny</label>
+            <label for="${licznikStopni}-stopien-platforma-bialy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-bialy" value="Biały">Biały</label>
+            <label for="${licznikStopni}-stopien-platforma-szary"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-szary" value="Szary">Szary</label>
+            <label for="${licznikStopni}-stopien-platforma-karmelowy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-karmelowy" value="Karmelowy">Karmelowy</label>
+            <label for="${licznikStopni}-stopien-platforma-brazowy"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-brazowy" value="Brązowy">Brązowy</label>
+            <label for="${licznikStopni}-stopien-platforma-czarny"><input type="radio" name="${licznikStopni}-stopien-platforma" id="${licznikStopni}-stopien-platforma-czarny" value="Czarny">Czarny</label>
             <p>Osłona</p>
-            <label for="${licznikStopni}-stopien-oslona-bialy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-bialy" value="Biały" required>Biały</label>
-            <label for="${licznikStopni}-stopien-oslona-szary"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-szary" value="Szary" required>Szary</label>
-            <label for="${licznikStopni}-stopien-oslona-karmelowy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-karmelowy" value="Karmelowy" required>Karmelowy</label>
-            <label for="${licznikStopni}-stopien-oslona-brazowy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-brazowy" value="Brązowy" required>Brązowy</label>
-            <label for="${licznikStopni}-stopien-oslona-czarny"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-czarny" value="Czarny" required>Czarny</label>
+            <label for="${licznikStopni}-stopien-oslona-bialy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-bialy" value="Biały">Biały</label>
+            <label for="${licznikStopni}-stopien-oslona-szary"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-szary" value="Szary">Szary</label>
+            <label for="${licznikStopni}-stopien-oslona-karmelowy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-karmelowy" value="Karmelowy">Karmelowy</label>
+            <label for="${licznikStopni}-stopien-oslona-brazowy"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-brazowy" value="Brązowy">Brązowy</label>
+            <label for="${licznikStopni}-stopien-oslona-czarny"><input type="radio" name="${licznikStopni}-stopien-oslona" id="${licznikStopni}-stopien-oslona-czarny" value="Czarny">Czarny</label>
         </div>
     `);
 
@@ -291,7 +301,7 @@ const drukujDaneOgolne = () => {
     const ODBIORCA = !ODBIORCA_CHECKBOX.is(':checked') ? $('#odbiorca').val() : 'Ten sam';
     const KRAJ = $('#kraj-inny').is(':checked') ? $('input[name="kraj-inny-input"]').val() : $('input[name="kraj"]:checked').val();
     const DATA = $('input[name="data-zamowienia"]').val();
-    const NUMER = $('input[name="numer-zamowienia"]').val();
+    const NUMER = NUMER_ZAMOWIENIA.is(':visible') ? NUMER_ZAMOWIENIA.val() : '';
     const KWOTA = $('input[name="kwota-zamowienia"]').val();
     const WALUTA = $('input#waluta-inna').is(':checked') ? $('input[name="waluta-inna-input"]').val() : $('input[name="waluta"]:checked').val();
     const ZRODLO = $('input[name="zrodlo-zamowienia"]:checked').val();
@@ -299,10 +309,17 @@ const drukujDaneOgolne = () => {
     const ZAPYTANIE = $('input[name="zapytanie-telefon-dodatki"]').is(':checked') ? 'TAK' : 'NIE';
     const LISTA_EXPRESS = $('input[name="lista-express"]').is(':checked') ? 'TAK' : 'NIE';
 
-    stworzTabele(
-        [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
-        [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
-    );
+    if (NUMER) {
+        stworzTabele(
+            [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
+            [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
+        );
+    } else {
+        stworzTabele(
+            [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Kwota', 'Waluta']],
+            [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, KWOTA, WALUTA]]
+        );
+    }
     stworzTabele(
         [['Źródło zamówienia', 'Zapłacono', 'Zapytanie o telefon/dodatki', 'Lista express']],
         [[ZRODLO, ZAPLACONO, ZAPYTANIE, LISTA_EXPRESS]],
@@ -515,6 +532,15 @@ const wyczyscDaneOperacyjneHTML = () => {
     licznikMateracy = licznikPolek = licznikStopni = licznikDomkow = 0;
 };
 
+const dzisiejszaData = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const yyyy = today.getFullYear();
+
+    return yyyy + mm + dd;
+};
+
 // CZYSZCZENIE LISTY PRODUKTÓW
 BUTTON_WYCZYSC_PRODUKTY.click((event) => {
     event.preventDefault();
@@ -526,7 +552,7 @@ BUTTON_WYCZYSC_PRODUKTY.click((event) => {
 if (BUTTON_TESTOWY.length) {
     BUTTON_TESTOWY.click(() => {
         drukujPDF();
-        PDF.save('Zamowienie_nr_' + $('input[name="numer-zamowienia"]').val());
+        PDF.save('Zamowienie_' + dzisiejszaData());
         wyczyscDaneOperacyjnePDF();
         PDF = new jsPDF('p', 'pt');
     });
@@ -535,7 +561,7 @@ if (BUTTON_TESTOWY.length) {
 // SUBMIT
 MAIN_FORM.submit(() => {
     drukujPDF();
-    PDF.save('Zamowienie_nr_' + $('input[name="numer-zamowienia"]').val());
+    PDF.save('Zamowienie_' + dzisiejszaData());
     wyczyscDaneOperacyjnePDF();
     PDF = new jsPDF('p', 'pt');
 });
