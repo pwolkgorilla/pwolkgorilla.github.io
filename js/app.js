@@ -59,7 +59,7 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
         NUMER_ZAMOWIENIA.prop('required', 'true');
     } else {
         KONTENER_NUMER_ZAMOWIENIA.hide();
-        NUMER_ZAMOWIENIA.prop('required', 'false');
+        NUMER_ZAMOWIENIA.removeAttr('required');
     }
 });
 
