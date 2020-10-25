@@ -559,7 +559,8 @@ if (BUTTON_TESTOWY.length) {
 }
 
 // SUBMIT
-MAIN_FORM.submit(() => {
+MAIN_FORM.submit((event) => {
+    event.preventDefault();
     drukujPDF();
     PDF.save('Zamowienie_' + dzisiejszaData());
     wyczyscDaneOperacyjnePDF();
