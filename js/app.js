@@ -15,8 +15,6 @@ const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
 const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
 const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
-const ODBIORCA_CHECKBOX = $('input[name="odbiorca-checkbox"]');
-const ODBIORCA_INPUT = $('input#odbiorca');
 const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
 
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
@@ -81,15 +79,6 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         default:
             EXPORT_CHECKBOX.prop('checked', false);
             break;
-    }
-});
-
-// OZYWIENIE PRZYCISKU 'ODBIORCA'
-ODBIORCA_CHECKBOX.change(() => {
-    if (ODBIORCA_CHECKBOX.is(':checked')) {
-        ODBIORCA_INPUT.prop('disabled', true);
-    } else {
-        ODBIORCA_INPUT.prop('disabled', false);
     }
 });
 
@@ -298,7 +287,6 @@ const drukujPDF = () => {
 
 const drukujDaneOgolne = () => {
     const ZAMAWIAJACY = $('#zamawiajacy').val();
-    const ODBIORCA = !ODBIORCA_CHECKBOX.is(':checked') ? $('#odbiorca').val() : 'Ten sam';
     const KRAJ = $('#kraj-inny').is(':checked') ? $('input[name="kraj-inny-input"]').val() : $('input[name="kraj"]:checked').val();
     const DATA = $('input[name="data-zamowienia"]').val();
     const NUMER = NUMER_ZAMOWIENIA.is(':visible') ? NUMER_ZAMOWIENIA.val() : '';
@@ -311,13 +299,13 @@ const drukujDaneOgolne = () => {
 
     if (NUMER) {
         stworzTabele(
-            [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
-            [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
+            [['Zamawiający', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
+            [[ZAMAWIAJACY, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
         );
     } else {
         stworzTabele(
-            [['Zamawiający', 'Odbiorca', 'Kraj', 'Data', 'Kwota', 'Waluta']],
-            [[ZAMAWIAJACY, ODBIORCA, KRAJ, DATA, KWOTA, WALUTA]]
+            [['Zamawiający', 'Kraj', 'Data', 'Kwota', 'Waluta']],
+            [[ZAMAWIAJACY, KRAJ, DATA, KWOTA, WALUTA]]
         );
     }
     stworzTabele(
@@ -343,7 +331,7 @@ const drukujPolki = () => {
             case 'Łuk':
             case 'Łuk Podwójny':
                 stworzTabeleProduktu([
-                    {title: 'PÓŁKA ' + idNumer, value: 'Sztuk: ' + LICZBA_POLEK},
+                    {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
                     {title: 'Kształt', value: KSZTALT},
                     {title: 'Długość', value: DLUGOSC},
                     {title: 'Materac', value: MATERAC},
@@ -373,7 +361,7 @@ const drukujStopnie = () => {
         const PLATFORMA = $('input[name="' + idNumer + '-stopien-platforma"]:checked').val();
         const OSLONA = $('input[name="' + idNumer + '-stopien-oslona"]:checked').val();
         stworzTabeleProduktu([
-            {title: 'STOPIEŃ ' + idNumer, value: 'Sztuk: ' + LICZBA_STOPNI},
+            {title: 'STOPIEŃ', value: 'Sztuk: ' + LICZBA_STOPNI},
             {title: 'Filc', value: FILC},
             {title: 'Platforma', value: PLATFORMA},
             {title: 'Osłona', value: OSLONA}
@@ -387,7 +375,7 @@ const drukujMaterace = () => {
         const DLUGOSC = $('input[name="' + idNumer + '-dlugosc-materac"]:checked').val();
         const KOLOR = $('input[name="' + idNumer + '-materac"]:checked').val();
         stworzTabeleProduktu([
-            {title: 'MATERAC ' + idNumer, value: 'Sztuk: ' + LICZBA_MATERACY},
+            {title: 'MATERAC', value: 'Sztuk: ' + LICZBA_MATERACY},
             {title: 'Długość', value: DLUGOSC},
             {title: 'Kolor', value: KOLOR}
         ]);
