@@ -33,11 +33,11 @@ let czyJestFalaWRzedzie = false;
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
     switch (event.target.id) {
-        case 'etsy':
         case 'ebay-us':
         case 'amazon':
             $('#usd').prop('checked', 'true');
             break;
+        case 'etsy':
         case 'ebay-de':
         case '4mypet':
             $('#eur').prop('checked', 'true');
