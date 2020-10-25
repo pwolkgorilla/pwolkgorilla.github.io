@@ -30,6 +30,11 @@ let biezacaWysokosc = 50;
 let biezacyLewyMargines = 60;
 let czyJestFalaWRzedzie = false;
 
+// USTAWIENIA STRONY
+$(document).ready(function(){
+    $(this).scrollTop(0);
+});
+
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
     switch (event.target.id) {
@@ -74,6 +79,7 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'usa':
         case 'au':
         case 'ca':
+        case 'ch':
             EXPORT_CHECKBOX.prop('checked', true);
             break;
         default:
