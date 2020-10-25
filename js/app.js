@@ -341,7 +341,7 @@ const drukujPolki = () => {
             case 'Fala':
                 czyJestFalaWRzedzie = true;
                 stworzTabeleProduktu([
-                    {title: 'PÓŁKA ' + idNumer, value: 'Sztuk: ' + LICZBA_POLEK},
+                    {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
                     {title: 'Kształt', value: KSZTALT},
                     {title: 'Długość', value: DLUGOSC},
                     {title: 'Symetria', value: SYMETRIA},
