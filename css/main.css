@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+p {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
 input[type="submit"] {
     margin-top: 20px;
     padding: 5px 20px;

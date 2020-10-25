@@ -8,6 +8,9 @@ const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
 const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
 const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
+const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
+const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
+const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
 const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
 const ODBIORCA_CHECKBOX = $('input[name="odbiorca-checkbox"]');
@@ -26,6 +29,34 @@ let PDF = new jsPDF('p', 'pt');
 let biezacaWysokosc = 50;
 let biezacyLewyMargines = 60;
 let czyJestFalaWRzedzie = false;
+
+// PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
+ZRODLO_RADIO_BUTTONY.change((event) => {
+    switch (event.target.id) {
+        case 'etsy':
+        case 'ebay-us':
+        case 'amazon':
+            $('#usd').prop('checked', 'true');
+            break;
+        case 'ebay-de':
+        case '4mypet':
+            $('#eur').prop('checked', 'true');
+            break;
+        case '4mypetshop':
+        case 'allegro':
+            $('#pln').prop('checked', 'true');
+            break;
+        case 'ebay-uk':
+            $('#gbp').prop('checked', 'true');
+            break;
+    }
+    WALUTA_INNA_INPUT.prop('disabled', true);
+});
+
+// OZYWIENIE PRZYCISKÓW 'WALUTA'
+WALUTA_RADIO_BUTTONY.change(() => {
+    $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false) : WALUTA_INNA_INPUT.prop('disabled', true);
+});
 
 // OZYWIENIE PRZYCISKÓW 'KRAJ'
 KRAJ_RADIO_BUTTONY.change((event) => {
@@ -262,7 +293,7 @@ const drukujDaneOgolne = () => {
     const DATA = $('input[name="data-zamowienia"]').val();
     const NUMER = $('input[name="numer-zamowienia"]').val();
     const KWOTA = $('input[name="kwota-zamowienia"]').val();
-    const WALUTA = $('input[name="waluta"]:checked').val();
+    const WALUTA = $('input#waluta-inna').is(':checked') ? $('input[name="waluta-inna-input"]').val() : $('input[name="waluta"]:checked').val();
     const ZRODLO = $('input[name="zrodlo-zamowienia"]:checked').val();
     const ZAPLACONO = $('input[name="zaplacono-data"]').val() || '';
     const ZAPYTANIE = $('input[name="zapytanie-telefon-dodatki"]').is(':checked') ? 'TAK' : 'NIE';

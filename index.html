@@ -23,7 +23,17 @@
     </div>
     <input type="text" name="odbiorca" id="odbiorca" required disabled>
 
-    <p>Kraj</p>
+    <p>Źródło zamówienia</p>
+    <label for="etsy"><input type="radio" name="zrodlo-zamowienia" id="etsy" value="Etsy" required>Etsy</label>
+    <label for="ebay-de"><input type="radio" name="zrodlo-zamowienia" id="ebay-de" value="eBay DE" required>eBay DE</label>
+    <label for="ebay-uk"><input type="radio" name="zrodlo-zamowienia" id="ebay-uk" value="eBay UK" required>eBay UK</label>
+    <label for="ebay-us"><input type="radio" name="zrodlo-zamowienia" id="ebay-us" value="eBay US" required>eBay US</label>
+    <label for="amazon"><input type="radio" name="zrodlo-zamowienia" id="amazon" value="Amazon" required>Amazon</label>
+    <label for="4mypet"><input type="radio" name="zrodlo-zamowienia" id="4mypet" value="4MyPet" required>4MyPet</label>
+    <label for="4mypetshop"><input type="radio" name="zrodlo-zamowienia" id="4mypetshop" value="4MyPetShop" required>4MyPetShop</label>
+    <label for="allegro"><input type="radio" name="zrodlo-zamowienia" id="allegro" value="Allegro" required>Allegro</label>
+
+    <p>Kraj dostawy</p>
     <label for="usa"><input type="radio" name="kraj" id="usa" value="USA" required>USA</label>
     <label for="de"><input type="radio" name="kraj" id="de" value="DE" required>DE</label>
     <label for="uk"><input type="radio" name="kraj" id="uk" value="UK" required>UK</label>
@@ -58,19 +68,13 @@
     <label for="pln"><input type="radio" name="waluta" id="pln" value="PLN" required>PLN</label>
     <label for="usd"><input type="radio" name="waluta" id="usd" value="USD" required>USD</label>
     <label for="gbp"><input type="radio" name="waluta" id="gbp" value="GBP" required>GBP</label>
+    <label for="waluta-inna"><input type="radio" name="waluta" id="waluta-inna" value="Inna: " required>Inna: </label>
+    <input type="text" name="waluta-inna-input" required disabled>
 
     <div class="checkbox zaplacono">
         <label>Zapłacono</label>
         <input type="text" name="zaplacono-data">
     </div>
-
-    <p>Źródło zamówienia</p>
-    <label for="etsy"><input type="radio" name="zrodlo-zamowienia" id="etsy" value="Etsy" required>Etsy</label>
-    <label for="ebay"><input type="radio" name="zrodlo-zamowienia" id="ebay" value="eBay" required>eBay</label>
-    <label for="amazon"><input type="radio" name="zrodlo-zamowienia" id="amazon" value="Amazon" required>Amazon</label>
-    <label for="4mypet"><input type="radio" name="zrodlo-zamowienia" id="4mypet" value="4MyPet" required>4MyPet</label>
-    <label for="4mypetshop"><input type="radio" name="zrodlo-zamowienia" id="4mypetshop" value="4MyPetShop" required>4MyPetShop</label>
-    <label for="allegro"><input type="radio" name="zrodlo-zamowienia" id="allegro" value="Allegro" required>Allegro</label>
 
     <div class="checkbox zapytanie-telefon-dodatki">
         <label for="zapytanie-telefon-dodatki">
