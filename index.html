@@ -42,7 +42,7 @@
     <input type="text" name="kraj-inny-input" required disabled>
     <div class="checkbox export">
         <label for="export-checkbox"><input type="checkbox" name="export-checkbox" id="export-checkbox">
-            Export
+            Uzyskać potwierdzenie eksportu
         </label>
     </div>
 
@@ -70,19 +70,6 @@
         <input type="text" name="zaplacono-data">
     </div>
 
-    <div class="checkbox zapytanie-telefon-dodatki">
-        <label for="zapytanie-telefon-dodatki">
-            <input type="checkbox" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki" value="tak">
-            Zapytanie o telefon/dodatki
-        </label>
-    </div>
-
-    <div class="checkbox lista-express">
-        <label for="lista-express"><input type="checkbox" name="lista-express" id="lista-express" value="tak">
-            Lista express
-        </label>
-    </div>
-
     <div class="lista-produktow">
         <p>LISTA PRODUKTÓW:</p>
     </div>
@@ -96,11 +83,19 @@
     <button id="produkt-dodaj">Dodaj Produkt</button>
     <button id="wyczysc-produkty">Wyczyść listę produktów</button>
 
+    <p>Zapytanie o telefon/dodatki</p>
+    <label for="zapytanie-telefon-dodatki-tak"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-tak" value="tak" required>Tak</label>
+    <label for="zapytanie-telefon-dodatki-nie"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-nie" value="nie" required>Nie</label>
+
+    <p>Lista express</p>
+    <label for="lista-express-tak"><input type="radio" name="lista-express" id="lista-express-tak" value="tak" required>Tak</label>
+    <label for="lista-express-nie"><input type="radio" name="lista-express" id="lista-express-nie" value="nie" required>Nie</label>
+
     <p>Uwagi do zamówienia</p>
     <textarea rows="4" cols="50" id="uwagi-do-zamowienia"></textarea>
 
     <p>Wysłać do dnia</p>
-    <input type="text" name="data-wyslac-do-dnia" required>
+    <input type="text" name="data-wyslac-do-dnia">
 
     <br>
     <input type="submit" value="Generuj PDF">

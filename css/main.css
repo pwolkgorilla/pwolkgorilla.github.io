@@ -8,6 +8,10 @@ p {
     font-weight: 700;
 }
 
+textarea {
+    text-align: left;
+}
+
 input[type="submit"] {
     margin-top: 20px;
     padding: 5px 20px;

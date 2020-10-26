@@ -16,6 +16,7 @@ const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
 const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
 const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
+const ZAPLACONO_INPUT = $('input[name="zaplacono-data"]');
 
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
 let licznikPolek = 0;
@@ -65,6 +66,11 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
         KONTENER_NUMER_ZAMOWIENIA.hide();
         NUMER_ZAMOWIENIA.removeAttr('required');
     }
+});
+
+// OZYWIENIE INPUTU 'ZAPŁACONO'
+ZAPLACONO_INPUT.change(() => {
+    ZAPLACONO_INPUT.val() ? $('input[name="data-wyslac-do-dnia"]').prop('required', 'true') : $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
@@ -301,25 +307,27 @@ const drukujDaneOgolne = () => {
     const WALUTA = $('input#waluta-inna').is(':checked') ? $('input[name="waluta-inna-input"]').val() : $('input[name="waluta"]:checked').val();
     const ZRODLO = $('input[name="zrodlo-zamowienia"]:checked').val();
     const ZAPLACONO = $('input[name="zaplacono-data"]').val() || '';
-    const ZAPYTANIE = $('input[name="zapytanie-telefon-dodatki"]').is(':checked') ? 'TAK' : 'NIE';
-    const LISTA_EXPRESS = $('input[name="lista-express"]').is(':checked') ? 'TAK' : 'NIE';
 
-    if (NUMER) {
+    stworzTabele(
+        [['Zamawiający', 'Kraj', 'Data', 'Kwota', 'Waluta']],
+        [[ZAMAWIAJACY, KRAJ, DATA, KWOTA, WALUTA]]
+    );
+
+    if (NUMER_ZAMOWIENIA.is(':visible')) {
         stworzTabele(
-            [['Zamawiający', 'Kraj', 'Data', 'Numer', 'Kwota', 'Waluta']],
-            [[ZAMAWIAJACY, KRAJ, DATA, NUMER, KWOTA, WALUTA]]
+            [['Źródło zamówienia', 'Numer', 'Zapłacono']],
+            [[ZRODLO, NUMER, ZAPLACONO]],
+            60,
+            250
         );
     } else {
         stworzTabele(
-            [['Zamawiający', 'Kraj', 'Data', 'Kwota', 'Waluta']],
-            [[ZAMAWIAJACY, KRAJ, DATA, KWOTA, WALUTA]]
+            [['Źródło zamówienia', 'Zapłacono']],
+            [[ZRODLO, ZAPLACONO]],
+            60,
+            200
         );
     }
-    stworzTabele(
-        [['Źródło zamówienia', 'Zapłacono', 'Zapytanie o telefon/dodatki', 'Lista express']],
-        [[ZRODLO, ZAPLACONO, ZAPYTANIE, LISTA_EXPRESS]],
-        60
-    );
 
     biezacaWysokosc += 60;
 };
@@ -390,14 +398,19 @@ const drukujMaterace = () => {
 };
 
 const drukujStopke = () => {
-    const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val() || '\n \n \n';
+    const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val();
     const DATA_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]').val();
     biezacaWysokosc = 630;
 
     stworzTabele(
         [['Uwagi do zamówienia']],
-        [[UWAGI_DO_ZAMOWIENIA]]
+        [[UWAGI_DO_ZAMOWIENIA]],
+        false,
+        false,
+        false,
+        70
     );
+
     stworzTabele(
         [['Wysłać do dnia', 'Waga paczki', 'Wysłano dnia', 'Przewoźnik']],
         [[DATA_WYSLAC_DO_DNIA, '', '', '']],
@@ -416,7 +429,7 @@ const drukujStopke = () => {
     }
 };
 
-const stworzTabele = (zbiorHead, zbiorBody, wzrostWysokosci, tableWidth, lewyMargines) => {
+const stworzTabele = (zbiorHead, zbiorBody, wzrostWysokosci, tableWidth, lewyMargines, wysokoscKomorki) => {
     biezacaWysokosc += wzrostWysokosci || 0;
     PDF.autoTable({
         head: zbiorHead,
@@ -434,6 +447,9 @@ const stworzTabele = (zbiorHead, zbiorBody, wzrostWysokosci, tableWidth, lewyMar
         headStyles: {
             font: 'Roboto-Bold',
             fontStyle: 'bold'
+        },
+        bodyStyles: {
+            minCellHeight: wysokoscKomorki || 0
         }
     });
 };
@@ -448,8 +464,16 @@ const stworzTabeleProduktu = (zbiorBody) => {
             lineColor: 0,
             lineWidth: 1
         },
-        tableWidth: 160,
-        columnStyles: { title: { font: 'Roboto-Bold', fontStyle: 'bold' } }, // European countries centered
+        tableWidth: 240,
+        columnStyles: {
+            title: {
+                font: 'Roboto-Bold',
+                fontStyle: 'bold'
+            },
+            value: {
+                cellWidth: 140
+            }
+        },
         body: zbiorBody,
         margin: { left: biezacyLewyMargines },
         columns: [
@@ -463,12 +487,9 @@ const stworzTabeleProduktu = (zbiorBody) => {
 const skorygujPolozenieTabeli = () => {
     switch (biezacyLewyMargines) {
         case 60:
-            biezacyLewyMargines = 225;
+            biezacyLewyMargines = 310;
             break;
-        case 225:
-            biezacyLewyMargines = 390;
-            break;
-        case 390:
+        case 310:
             biezacyLewyMargines = 60;
             czyJestFalaWRzedzie ? biezacaWysokosc += 180 : biezacaWysokosc += 132;
             czyJestFalaWRzedzie = false;
