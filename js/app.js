@@ -9,6 +9,7 @@ const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
 const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
 const KONTENER_NUMER_ZAMOWIENIA = $('div.kontener-numer-zamowienia');
+const KONTENER_LISTA_EXPRESS = $('div.kontener-lista-express');
 const NUMER_ZAMOWIENIA = $('input[name="numer-zamowienia"]');
 const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
 const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
@@ -16,13 +17,14 @@ const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
 const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
 const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
-const ZAPLACONO_INPUT = $('input[name="zaplacono-data"]');
+const EXPORT_KONTENER = $('div.checkbox.export');
 
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
 let licznikPolek = 0;
 let licznikDomkow = 0;
 let licznikMateracy = 0;
 let licznikStopni = 0;
+let licznikInnych = 0;
 
 // DANE OPERACYJNE (DO RENDEROWANIA PDF)
 let PDF = new jsPDF('p', 'pt');
@@ -35,6 +37,48 @@ let czyJestFalaWRzedzie = false;
 window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 };
+
+// DATEPICKER KONFIGURACJA
+$.datepicker.setDefaults({
+    dateFormat: 'd-m-yy',
+    dayNamesMin: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'],
+    firstDay: 1,
+    showOtherMonths: true,
+    monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
+});
+
+// DATA ZAMOWIENIA
+DATEPICKER_DATA_ZAMOWIENIA.datepicker();
+
+// ZAPLACONO - DATA
+DATEPICKER_ZAPLACONO.datepicker();
+
+// WYSŁAĆ DO DNIA
+DATEPICKER_WYSLAC_DO_DNIA.datepicker();
+
+// GENEROWANIE PRODUKTU
+BUTTON_DODAJ_PRODUKT.click((event) => {
+    event.preventDefault();
+
+    const radioProdukt = $('input[name="produkt"]:checked').val();
+    switch (radioProdukt) {
+        case 'Półka':
+            stworzNowaPolke();
+            break;
+        case 'Stopień':
+            stworzNowyStopien();
+            break;
+        case 'Materac':
+            stworzNowyMaterac();
+            break;
+        case 'Domek':
+            stworzNowyDomek();
+            break;
+        case 'Inny':
+            stworzNowyInny();
+            break;
+    }
+});
 
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
@@ -69,8 +113,8 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
 });
 
 // OZYWIENIE INPUTU 'ZAPŁACONO'
-ZAPLACONO_INPUT.change(() => {
-    ZAPLACONO_INPUT.val() ? $('input[name="data-wyslac-do-dnia"]').prop('required', 'true') : $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
+DATEPICKER_ZAPLACONO.change(() => {
+    DATEPICKER_ZAPLACONO.val() ? $('input[name="data-wyslac-do-dnia"]').prop('required', 'true') : $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
@@ -87,10 +131,18 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'au':
         case 'ca':
         case 'ch':
+            EXPORT_KONTENER.css('display', 'block');
             EXPORT_CHECKBOX.prop('checked', true);
+            KONTENER_LISTA_EXPRESS.css('display', 'block');
+            break;
+        case 'kraj-inny':
+            EXPORT_KONTENER.css('display', 'block');
+            EXPORT_CHECKBOX.prop('checked', false);
+            KONTENER_LISTA_EXPRESS.css('display', 'block');
             break;
         default:
-            EXPORT_CHECKBOX.prop('checked', false);
+            EXPORT_KONTENER.css('display', 'none');
+            KONTENER_LISTA_EXPRESS.css('display', 'none');
             break;
     }
 });
@@ -240,7 +292,7 @@ const stworzNowyStopien = () => {
             <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy">Kremowy</label>
             <label for="${licznikStopni}-stopien-filc-bezowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bezowy" value="Beżowy">Beżowy</label>
             <label for="${licznikStopni}-stopien-filc-szaryjasny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryjasny" value="Jasny szary">Jasny szary</label>
-            <label for="${licznikStopni}-stopien-filc-szaryciemny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryciemny" value="Ciemny szary">Ciemny szary</label>
+            <label for="${licznikStopni}-stopien-filc-grafitowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-grafitowy" value="Grafitowy">Grafitowy</label>
             <label for="${licznikStopni}-stopien-filc-czarny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-czarny" value="Czarny">Czarny</label>
             <label for="${licznikStopni}-stopien-filc-burgundowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-burgundowy" value="Burgundowy">Burgundowy</label>
             <label for="${licznikStopni}-stopien-filc-niebieski"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-niebieski" value="Kobaltowy">Kobaltowy niebieski</label>
@@ -261,6 +313,25 @@ const stworzNowyStopien = () => {
     `);
 
     dodajPrzyciskUsun('#stopien-numer-'+licznikStopni);
+};
+
+// TWORZENIE NIESTANDARDOWEGO PRODUKTU
+const stworzNowyInny = () => {
+    licznikInnych++;
+
+    KONTENER_LISTA_PRODUKTOW.append(`
+            <div class="produkt produkt-inny" id="inny-numer-${licznikInnych}">
+            <p>INNY NR ${licznikInnych}</p>
+            <p>Nazwa:</p>
+            <input type="text" name="${licznikInnych}-nazwa-inny" required>
+            <p>Liczba:</p>
+            <input type="text" name="${licznikInnych}-liczba-inny" value="1" required>
+            <p>Opis</p>
+            <textarea rows="3" cols="50" id="${licznikInnych}-opis-inny"></textarea>
+        </div>
+    `);
+
+    dodajPrzyciskUsun('#inny-numer-'+licznikInnych);
 };
 
 // DODAWANIE DELETE BUTTONA
@@ -286,6 +357,9 @@ const dodajPrzyciskUsun = (selektor) => {
             case selektor.startsWith('#domek'):
                 licznikDomkow--;
                 break;
+            case selektor.startsWith('#inny'):
+                licznikInnych--;
+                break;
         }
     });
 };
@@ -295,6 +369,7 @@ const drukujPDF = () => {
     licznikPolek > 0 ? drukujPolki() : console.log('brak polek');
     licznikStopni > 0 ? drukujStopnie() : console.log('brak stopni');
     licznikMateracy > 0 ? drukujMaterace() : console.log('brak materacy');
+    licznikInnych > 0 ? drukujInne() : console.log('brak innych');
     drukujStopke();
 };
 
@@ -397,10 +472,27 @@ const drukujMaterace = () => {
     }
 };
 
+const drukujInne = () => {
+    for (let idNumer = 1 ; idNumer <= licznikInnych ; idNumer++) {
+        const NAZWA = $('input[name="' + idNumer + '-nazwa-inny"]').val();
+        const LICZBA = $('input[name="' + idNumer + '-liczba-inny"]').val();
+        const OPIS = $('#' + idNumer + '-opis-inny').val();
+        stworzTabele(
+            [[NAZWA]],
+            [['Sztuk: ' + LICZBA], [OPIS]],
+            false,
+            240,
+            biezacyLewyMargines,
+            false
+        );
+        skorygujPolozenieTabeli();
+    }
+};
+
 const drukujStopke = () => {
     const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val();
     const DATA_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]').val();
-    biezacaWysokosc = 630;
+    biezacaWysokosc = 530;
 
     stworzTabele(
         [['Uwagi do zamówienia']],
@@ -408,13 +500,13 @@ const drukujStopke = () => {
         false,
         false,
         false,
-        70
+        160
     );
 
     stworzTabele(
         [['Wysłać do dnia', 'Waga paczki', 'Wysłano dnia', 'Przewoźnik']],
         [[DATA_WYSLAC_DO_DNIA, '', '', '']],
-        100,
+        200,
         300
     );
 
@@ -497,45 +589,6 @@ const skorygujPolozenieTabeli = () => {
     }
 };
 
-// DATEPICKER KONFIGURACJA
-$.datepicker.setDefaults({
-    dateFormat: 'd-m-yy',
-    dayNamesMin: ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'],
-    firstDay: 1,
-    showOtherMonths: true,
-    monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
-});
-
-// DATA ZAMOWIENIA
-DATEPICKER_DATA_ZAMOWIENIA.datepicker();
-
-// ZAPLACONO - DATA
-DATEPICKER_ZAPLACONO.datepicker();
-
-// WYSŁAĆ DO DNIA
-DATEPICKER_WYSLAC_DO_DNIA.datepicker();
-
-// GENEROWANIE PRODUKTU
-BUTTON_DODAJ_PRODUKT.click((event) => {
-    event.preventDefault();
-
-    const radioProdukt = $('input[name="produkt"]:checked').val();
-    switch (radioProdukt) {
-        case 'Półka':
-            stworzNowaPolke();
-            break;
-        case 'Stopień':
-            stworzNowyStopien();
-            break;
-        case 'Materac':
-            stworzNowyMaterac();
-            break;
-        case 'Domek':
-            stworzNowyDomek();
-            break;
-    }
-});
-
 // CZYSZCZENIE DANYCH OPERACYJNYCH DO GENEROWANIA PDF
 const wyczyscDaneOperacyjnePDF = () => {
     biezacyLewyMargines = 60;
@@ -545,9 +598,10 @@ const wyczyscDaneOperacyjnePDF = () => {
 
 // CZYSZCZENIE DANYCH OPERACYJNYCH DO GENEROWANIA PRODUKTOW HTML
 const wyczyscDaneOperacyjneHTML = () => {
-    licznikMateracy = licznikPolek = licznikStopni = licznikDomkow = 0;
+    licznikMateracy = licznikPolek = licznikStopni = licznikDomkow = licznikInnych = 0;
 };
 
+// GENEROWANIE DZISIEJSZEJ DATY
 const dzisiejszaData = () => {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');

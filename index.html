@@ -40,7 +40,7 @@
     <label for="ca"><input type="radio" name="kraj" id="ca" value="CA" required>CA</label>
     <label for="kraj-inny"><input type="radio" name="kraj" id="kraj-inny" value="Inny: " required>Inny: </label>
     <input type="text" name="kraj-inny-input" required disabled>
-    <div class="checkbox export">
+    <div class="checkbox export" style="display: none">
         <label for="export-checkbox"><input type="checkbox" name="export-checkbox" id="export-checkbox">
             Uzyskać potwierdzenie eksportu
         </label>
@@ -79,6 +79,7 @@
     <label for="stopien"><input type="radio" name="produkt" id="stopien" value="Stopień" required>Stopień</label>
     <label for="materac"><input type="radio" name="produkt" id="materac" value="Materac" required>Materac</label>
     <label for="domek"><input type="radio" name="produkt" id="domek" value="Domek" required>Domek</label>
+    <label for="inny"><input type="radio" name="produkt" id="inny" value="Inny" required>Inny</label>
     <br>
     <button id="produkt-dodaj">Dodaj Produkt</button>
     <button id="wyczysc-produkty">Wyczyść listę produktów</button>
@@ -87,9 +88,11 @@
     <label for="zapytanie-telefon-dodatki-tak"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-tak" value="tak" required>Tak</label>
     <label for="zapytanie-telefon-dodatki-nie"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-nie" value="nie" required>Nie</label>
 
-    <p>Lista express</p>
-    <label for="lista-express-tak"><input type="radio" name="lista-express" id="lista-express-tak" value="tak" required>Tak</label>
-    <label for="lista-express-nie"><input type="radio" name="lista-express" id="lista-express-nie" value="nie" required>Nie</label>
+    <div class="kontener-lista-express" style="display: none">
+        <p>Lista express</p>
+        <label for="lista-express-tak"><input type="radio" name="lista-express" id="lista-express-tak" value="tak" required>Tak</label>
+        <label for="lista-express-nie"><input type="radio" name="lista-express" id="lista-express-nie" value="nie" required>Nie</label>
+    </div>
 
     <p>Uwagi do zamówienia</p>
     <textarea rows="4" cols="50" id="uwagi-do-zamowienia"></textarea>
