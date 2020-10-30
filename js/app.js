@@ -1,5 +1,7 @@
 window.jsPDF = window.jspdf.jsPDF;
 
+console.log('Order Creator v1.12');
+
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
 const BUTTON_WYCZYSC_PRODUKTY = $('button#wyczysc-produkty');
