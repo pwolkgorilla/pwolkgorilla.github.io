@@ -133,19 +133,30 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'ch':
             EXPORT_KONTENER.css('display', 'block');
             EXPORT_CHECKBOX.prop('checked', true);
-            KONTENER_LISTA_EXPRESS.css('display', 'block');
+            przelacznikListyExpress(true);
             break;
         case 'kraj-inny':
             EXPORT_KONTENER.css('display', 'block');
             EXPORT_CHECKBOX.prop('checked', false);
-            KONTENER_LISTA_EXPRESS.css('display', 'block');
+            przelacznikListyExpress(true);
             break;
         default:
             EXPORT_KONTENER.css('display', 'none');
-            KONTENER_LISTA_EXPRESS.css('display', 'none');
+            przelacznikListyExpress(false);
             break;
     }
 });
+
+// LISTA EXPRESS - POJAWIANIE/ZNIKANIE
+const przelacznikListyExpress = (boolean) => {
+    if (boolean) {
+        KONTENER_LISTA_EXPRESS.css('display', 'block');
+        $('input[name="lista-express"]').prop('required', 'true');
+    } else {
+        KONTENER_LISTA_EXPRESS.css('display', 'none');
+        $('input[name="lista-express"]').removeAttr('required');
+    }
+};
 
 // TWORZENIE NOWEJ POLKI
 const stworzNowaPolke = () => {
