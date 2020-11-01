@@ -50,15 +50,15 @@
     </div>
 
     <p>Data zamówienia</p>
-    <input type="text" name="data-zamowienia" required>
+    <input type="text" autocomplete="off" name="data-zamowienia" required>
 
     <div class="kontener-numer-zamowienia" style="display: none">
         <p>Numer zamówienia</p>
-        <input type="text" name="numer-zamowienia">
+        <input type="text" autocomplete="off" name="numer-zamowienia">
     </div>
 
     <p>Kwota</p>
-    <input type="text" name="kwota-zamowienia" required>
+    <input type="text" autocomplete="off" name="kwota-zamowienia" required>
 
     <p>Waluta</p>
     <label for="eur"><input type="radio" name="waluta" id="eur" value="EUR" required>EUR</label>
@@ -73,7 +73,7 @@
         <label for="zapytanie-zaplacono-tak"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-tak" value="tak" required>Tak</label>
         <label for="zapytanie-zaplacono-nie"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-nie" value="nie" required>Nie</label>
         <br>
-        <input type="text" name="zaplacono-data" required disabled style="display: none">
+        <input type="text" autocomplete="off" name="zaplacono-data" required disabled style="display: none">
     </div>
 
     <div class="lista-produktow">
@@ -104,7 +104,7 @@
     <textarea rows="4" cols="50" id="uwagi-do-zamowienia"></textarea>
 
     <p>Wysłać do dnia</p>
-    <input type="text" name="data-wyslac-do-dnia">
+    <input type="text" autocomplete="off" name="data-wyslac-do-dnia">
 
     <br>
     <input type="submit" value="Generuj PDF">
