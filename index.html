@@ -10,7 +10,7 @@
     <title>Order Creator</title>
 </head>
 <body>
-<!--<button id="testbutton">testbutton</button>-->
+<button id="testbutton">testbutton</button>
 <form>
     <p>Zamawiający</p>
     <input type="text" name="zamawiajacy" id="zamawiajacy" required>
@@ -24,6 +24,8 @@
     <label for="4mypet"><input type="radio" name="zrodlo-zamowienia" id="4mypet" value="4MyPet" required>4MyPet</label>
     <label for="4mypetshop"><input type="radio" name="zrodlo-zamowienia" id="4mypetshop" value="4MyPetShop" required>4MyPetShop</label>
     <label for="allegro"><input type="radio" name="zrodlo-zamowienia" id="allegro" value="Allegro" required>Allegro</label>
+    <label for="zrodlo-inne"><input type="radio" name="zrodlo-zamowienia" id="zrodlo-inne" value="Inne" required>Inne</label>
+    <input type="text" name="zrodlo-inne-input" required disabled style="display: none">
 
     <p>Kraj dostawy</p>
     <label for="usa"><input type="radio" name="kraj" id="usa" value="USA" required>USA</label>
@@ -38,8 +40,9 @@
     <label for="au"><input type="radio" name="kraj" id="au" value="AU" required>AU</label>
     <label for="at"><input type="radio" name="kraj" id="at" value="AT" required>AT</label>
     <label for="ca"><input type="radio" name="kraj" id="ca" value="CA" required>CA</label>
-    <label for="kraj-inny"><input type="radio" name="kraj" id="kraj-inny" value="Inny: " required>Inny: </label>
-    <input type="text" name="kraj-inny-input" required disabled>
+    <label for="kraj-inny"><input type="radio" name="kraj" id="kraj-inny" value="Inny" required>Inny</label>
+    <input type="text" name="kraj-inny-input" required disabled style="display: none">
+
     <div class="checkbox export" style="display: none">
         <label for="export-checkbox"><input type="checkbox" name="export-checkbox" id="export-checkbox">
             Uzyskać potwierdzenie eksportu
@@ -62,12 +65,15 @@
     <label for="pln"><input type="radio" name="waluta" id="pln" value="PLN" required>PLN</label>
     <label for="usd"><input type="radio" name="waluta" id="usd" value="USD" required>USD</label>
     <label for="gbp"><input type="radio" name="waluta" id="gbp" value="GBP" required>GBP</label>
-    <label for="waluta-inna"><input type="radio" name="waluta" id="waluta-inna" value="Inna: " required>Inna: </label>
-    <input type="text" name="waluta-inna-input" required disabled>
+    <label for="waluta-inna"><input type="radio" name="waluta" id="waluta-inna" value="Inna" required>Inna</label>
+    <input type="text" name="waluta-inna-input" required disabled style="display: none">
 
     <div class="checkbox zaplacono">
-        <label>Zapłacono</label>
-        <input type="text" name="zaplacono-data">
+        <p>Czy zapłacono?</p>
+        <label for="zapytanie-zaplacono-tak"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-tak" value="tak" required>Tak</label>
+        <label for="zapytanie-zaplacono-nie"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-nie" value="nie" required>Nie</label>
+        <br>
+        <input type="text" name="zaplacono-data" required disabled style="display: none">
     </div>
 
     <div class="lista-produktow">
@@ -84,12 +90,12 @@
     <button id="produkt-dodaj">Dodaj Produkt</button>
     <button id="wyczysc-produkty">Wyczyść listę produktów</button>
 
-    <p>Zapytanie o telefon/dodatki</p>
+    <p>Czy wysłano zapytanie o telefon/dodatki?</p>
     <label for="zapytanie-telefon-dodatki-tak"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-tak" value="tak" required>Tak</label>
     <label for="zapytanie-telefon-dodatki-nie"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-nie" value="nie" required>Nie</label>
 
     <div class="kontener-lista-express" style="display: none">
-        <p>Lista express</p>
+        <p>Czy wpisano na listę express?</p>
         <label for="lista-express-tak"><input type="radio" name="lista-express" id="lista-express-tak" value="tak">Tak</label>
         <label for="lista-express-nie"><input type="radio" name="lista-express" id="lista-express-nie" value="nie">Nie</label>
     </div>

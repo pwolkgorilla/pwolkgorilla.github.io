@@ -1,11 +1,12 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.12');
+console.log('Order Creator v1.13');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
 const BUTTON_WYCZYSC_PRODUKTY = $('button#wyczysc-produkty');
 const BUTTON_TESTOWY = $('#testbutton');
+const ZAPLACONO_RADIO_BUTTONY = $('input[name="zapytanie-zaplacono"]');
 const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
 const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
@@ -14,6 +15,7 @@ const KONTENER_NUMER_ZAMOWIENIA = $('div.kontener-numer-zamowienia');
 const KONTENER_LISTA_EXPRESS = $('div.kontener-lista-express');
 const NUMER_ZAMOWIENIA = $('input[name="numer-zamowienia"]');
 const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
+const ZRODLO_INNE_INPUT = $('input[name="zrodlo-inne-input"]');
 const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
 const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
@@ -84,6 +86,11 @@ BUTTON_DODAJ_PRODUKT.click((event) => {
 
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
+    ZRODLO_INNE_INPUT.prop('disabled', true).css('display', 'none');
+    KONTENER_NUMER_ZAMOWIENIA.hide();
+    NUMER_ZAMOWIENIA.removeAttr('required');
+    WALUTA_INNA_INPUT.prop('disabled', true);
+
     switch (event.target.id) {
         case 'ebay-us':
         case 'amazon':
@@ -91,10 +98,19 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
             break;
         case 'etsy':
         case 'ebay-de':
+            $('#eur').prop('checked', 'true');
+            break;
         case '4mypet':
+            KONTENER_NUMER_ZAMOWIENIA.show();
+            NUMER_ZAMOWIENIA.prop('required', 'true');
             $('#eur').prop('checked', 'true');
             break;
         case '4mypetshop':
+            KONTENER_NUMER_ZAMOWIENIA.show();
+            NUMER_ZAMOWIENIA.prop('required', 'true');
+            $('#pln').prop('checked', 'true');
+            $('#pl').prop('checked', 'true');
+            break;
         case 'allegro':
             $('#pln').prop('checked', 'true');
             $('#pl').prop('checked', 'true');
@@ -102,31 +118,31 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
         case 'ebay-uk':
             $('#gbp').prop('checked', 'true');
             break;
-    }
-    WALUTA_INNA_INPUT.prop('disabled', true);
-
-    if (event.target.id === '4mypet' || event.target.id === '4mypetshop') {
-        KONTENER_NUMER_ZAMOWIENIA.show();
-        NUMER_ZAMOWIENIA.prop('required', 'true');
-    } else {
-        KONTENER_NUMER_ZAMOWIENIA.hide();
-        NUMER_ZAMOWIENIA.removeAttr('required');
+        case 'zrodlo-inne':
+            ZRODLO_INNE_INPUT.prop('disabled', false).css('display', 'inline-block');
+            break;
     }
 });
 
 // OZYWIENIE INPUTU 'ZAPŁACONO'
-DATEPICKER_ZAPLACONO.change(() => {
-    DATEPICKER_ZAPLACONO.val() ? $('input[name="data-wyslac-do-dnia"]').prop('required', 'true') : $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
+ZAPLACONO_RADIO_BUTTONY.change((event) => {
+    if (event.target.id === 'zapytanie-zaplacono-tak') {
+        DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block');
+        $('input[name="data-wyslac-do-dnia"]').prop('required', 'true');
+    } else {
+        DATEPICKER_ZAPLACONO.prop('disabled', true).css('display', 'none');
+        $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
+    }
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
 WALUTA_RADIO_BUTTONY.change(() => {
-    $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false) : WALUTA_INNA_INPUT.prop('disabled', true);
+    $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false).css('display', 'inline-block') : WALUTA_INNA_INPUT.prop('disabled', true).css('display', 'none');
 });
 
 // OZYWIENIE PRZYCISKÓW 'KRAJ'
 KRAJ_RADIO_BUTTONY.change((event) => {
-    $('input#kraj-inny').is(':checked') ? KRAJ_INNY_INPUT.prop('disabled', false) : KRAJ_INNY_INPUT.prop('disabled', true);
+    KRAJ_INNY_INPUT.prop('disabled', true).css('display', 'none');
 
     switch (event.target.id) {
         case 'usa':
@@ -140,6 +156,7 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'kraj-inny':
             EXPORT_KONTENER.css('display', 'block');
             EXPORT_CHECKBOX.prop('checked', false);
+            KRAJ_INNY_INPUT.prop('disabled', false).css('display', 'inline-block');
             przelacznikListyExpress(true);
             break;
         default:
@@ -393,7 +410,7 @@ const drukujDaneOgolne = () => {
     const NUMER = NUMER_ZAMOWIENIA.is(':visible') ? NUMER_ZAMOWIENIA.val() : '';
     const KWOTA = $('input[name="kwota-zamowienia"]').val();
     const WALUTA = $('input#waluta-inna').is(':checked') ? $('input[name="waluta-inna-input"]').val() : $('input[name="waluta"]:checked').val();
-    const ZRODLO = $('input[name="zrodlo-zamowienia"]:checked').val();
+    const ZRODLO = $('#zrodlo-inne').is(':checked') ? $('input[name="zrodlo-inne-input"]').val() : $('input[name="zrodlo-zamowienia"]:checked').val();
     const ZAPLACONO = $('input[name="zaplacono-data"]').val() || '';
 
     stworzTabele(
