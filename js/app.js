@@ -23,6 +23,15 @@ const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
 const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
 const EXPORT_KONTENER = $('div.checkbox.export');
 
+// DANE Z PAMIECI PODRECZNEJ (do kalendarzy)
+let ostatniaDataZamowienia = localStorage['ostatniaDataZamowienia'] || null;
+let ostatniaDataZaplacono = localStorage['ostatniaDataZaplacono'] || null;
+let ostatniaDataWyslac = localStorage['ostatniaDataWyslac'] || null;
+
+console.log('ostatniaDataZamowienia pobrana z local storage: ', ostatniaDataZamowienia);
+console.log('ostatniaDataZaplacono pobrana z local storage: ', ostatniaDataZaplacono);
+console.log('ostatniaDataWyslac pobrana z local storage: ', ostatniaDataWyslac);
+
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
 let licznikPolek = 0;
 let licznikDomkow = 0;
@@ -52,13 +61,31 @@ $.datepicker.setDefaults({
 });
 
 // DATA ZAMOWIENIA
-DATEPICKER_DATA_ZAMOWIENIA.datepicker();
+DATEPICKER_DATA_ZAMOWIENIA.datepicker({
+    defaultDate: ostatniaDataZamowienia || null,
+    onSelect: (dateText) => {
+        DATEPICKER_DATA_ZAMOWIENIA.datepicker('option', 'defaultDate', dateText);
+        localStorage['ostatniaDataZamowienia'] = dateText;
+    }
+});
 
 // ZAPLACONO - DATA
-DATEPICKER_ZAPLACONO.datepicker();
+DATEPICKER_ZAPLACONO.datepicker({
+    defaultDate: ostatniaDataZaplacono || null,
+    onSelect: (dateText) => {
+        DATEPICKER_ZAPLACONO.datepicker('option', 'defaultDate', dateText);
+        localStorage['ostatniaDataZaplacono'] = dateText;
+    }
+});
 
 // WYSŁAĆ DO DNIA
-DATEPICKER_WYSLAC_DO_DNIA.datepicker();
+DATEPICKER_WYSLAC_DO_DNIA.datepicker({
+    defaultDate: ostatniaDataWyslac || null,
+    onSelect: (dateText) => {
+        DATEPICKER_WYSLAC_DO_DNIA.datepicker('option', 'defaultDate', dateText);
+        localStorage['ostatniaDataWyslac'] = dateText;
+    }
+});
 
 // GENEROWANIE PRODUKTU
 BUTTON_DODAJ_PRODUKT.click((event) => {
