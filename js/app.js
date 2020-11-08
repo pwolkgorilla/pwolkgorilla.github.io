@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.13');
+console.log('Order Creator v1.15');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
@@ -14,6 +14,7 @@ const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
 const KONTENER_NUMER_ZAMOWIENIA = $('div.kontener-numer-zamowienia');
 const KONTENER_LISTA_EXPRESS = $('div.kontener-lista-express');
 const NUMER_ZAMOWIENIA = $('input[name="numer-zamowienia"]');
+const KWOTA_ZAMOWIENIA = $('input[name="kwota-zamowienia"]');
 const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
 const ZRODLO_INNE_INPUT = $('input[name="zrodlo-inne-input"]');
 const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
@@ -28,9 +29,9 @@ let ostatniaDataZamowienia = localStorage['ostatniaDataZamowienia'] || null;
 let ostatniaDataZaplacono = localStorage['ostatniaDataZaplacono'] || null;
 let ostatniaDataWyslac = localStorage['ostatniaDataWyslac'] || null;
 
-console.log('ostatniaDataZamowienia pobrana z local storage: ', ostatniaDataZamowienia);
-console.log('ostatniaDataZaplacono pobrana z local storage: ', ostatniaDataZaplacono);
-console.log('ostatniaDataWyslac pobrana z local storage: ', ostatniaDataWyslac);
+console.log('ostatnia Data Zamowienia pobrana z local storage: ', ostatniaDataZamowienia);
+console.log('ostatnia Data Zaplacono pobrana z local storage: ', ostatniaDataZaplacono);
+console.log('ostatnia Data Wyslac pobrana z local storage: ', ostatniaDataWyslac);
 
 // DANE OPERACYJNE (DO RENDEROWANIA PRODUKTÓW NA STRONIE)
 let licznikPolek = 0;
@@ -113,40 +114,54 @@ BUTTON_DODAJ_PRODUKT.click((event) => {
 
 // PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
-    ZRODLO_INNE_INPUT.prop('disabled', true).css('display', 'none');
+    ZRODLO_INNE_INPUT.prop('disabled', true).hide();
+    WALUTA_INNA_INPUT.prop('disabled', true).hide();
+    KRAJ_INNY_INPUT.prop('disabled', true).hide();
     KONTENER_NUMER_ZAMOWIENIA.hide();
+    $('.waluta-input').hide();
+    EXPORT_KONTENER.hide();
+    EXPORT_CHECKBOX.prop('checked', false);
     NUMER_ZAMOWIENIA.removeAttr('required');
-    WALUTA_INNA_INPUT.prop('disabled', true);
+    DATEPICKER_WYSLAC_DO_DNIA.removeAttr('required');
 
     switch (event.target.id) {
         case 'ebay-us':
         case 'amazon':
-            $('#usd').prop('checked', 'true');
+            $('.usd').prop('checked', 'true').show();
             break;
         case 'etsy':
+            $('.eur').prop('checked', 'true').show();
+            $('#zapytanie-zaplacono-tak').prop('checked', 'true');
+            DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block');
+            DATEPICKER_ZAPLACONO.val(DATEPICKER_DATA_ZAMOWIENIA.val());
+            DATEPICKER_WYSLAC_DO_DNIA.prop('required', 'true');
+            break;
         case 'ebay-de':
-            $('#eur').prop('checked', 'true');
+            $('.eur').prop('checked', 'true').show();
+            $('#de').prop('checked', 'true');
             break;
         case '4mypet':
             KONTENER_NUMER_ZAMOWIENIA.show();
             NUMER_ZAMOWIENIA.prop('required', 'true');
-            $('#eur').prop('checked', 'true');
+            $('.eur').prop('checked', 'true').show();
             break;
         case '4mypetshop':
             KONTENER_NUMER_ZAMOWIENIA.show();
             NUMER_ZAMOWIENIA.prop('required', 'true');
-            $('#pln').prop('checked', 'true');
+            $('.pln').prop('checked', 'true').show();
             $('#pl').prop('checked', 'true');
             break;
         case 'allegro':
-            $('#pln').prop('checked', 'true');
+            $('.pln').prop('checked', 'true').show();
             $('#pl').prop('checked', 'true');
             break;
         case 'ebay-uk':
-            $('#gbp').prop('checked', 'true');
+            $('.gbp').prop('checked', 'true').show();
+            $('#uk').prop('checked', 'true');
             break;
         case 'zrodlo-inne':
             ZRODLO_INNE_INPUT.prop('disabled', false).css('display', 'inline-block');
+            $('.waluta-input').show();
             break;
     }
 });
@@ -154,52 +169,63 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
 // OZYWIENIE INPUTU 'ZAPŁACONO'
 ZAPLACONO_RADIO_BUTTONY.change((event) => {
     if (event.target.id === 'zapytanie-zaplacono-tak') {
-        DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block');
-        $('input[name="data-wyslac-do-dnia"]').prop('required', 'true');
+        DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block').focus();
+        DATEPICKER_WYSLAC_DO_DNIA.prop('required', 'true');
     } else {
-        DATEPICKER_ZAPLACONO.prop('disabled', true).css('display', 'none');
-        $('input[name="data-wyslac-do-dnia"]').removeAttr('required');
+        DATEPICKER_ZAPLACONO.prop('disabled', true).hide();
+        DATEPICKER_WYSLAC_DO_DNIA.removeAttr('required');
     }
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
 WALUTA_RADIO_BUTTONY.change(() => {
-    $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false).css('display', 'inline-block') : WALUTA_INNA_INPUT.prop('disabled', true).css('display', 'none');
+    $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false).css('display', 'inline-block') : WALUTA_INNA_INPUT.prop('disabled', true).hide();
 });
 
 // OZYWIENIE PRZYCISKÓW 'KRAJ'
 KRAJ_RADIO_BUTTONY.change((event) => {
-    KRAJ_INNY_INPUT.prop('disabled', true).css('display', 'none');
+    KRAJ_INNY_INPUT.prop('disabled', true).hide();
 
     switch (event.target.id) {
         case 'usa':
         case 'au':
         case 'ca':
         case 'ch':
-            EXPORT_KONTENER.css('display', 'block');
+            EXPORT_KONTENER.show();
             EXPORT_CHECKBOX.prop('checked', true);
             przelacznikListyExpress(true);
             break;
         case 'kraj-inny':
-            EXPORT_KONTENER.css('display', 'block');
+            EXPORT_KONTENER.show();
             EXPORT_CHECKBOX.prop('checked', false);
             KRAJ_INNY_INPUT.prop('disabled', false).css('display', 'inline-block');
             przelacznikListyExpress(true);
             break;
         default:
-            EXPORT_KONTENER.css('display', 'none');
+            EXPORT_KONTENER.hide();
+            EXPORT_CHECKBOX.prop('checked', false);
             przelacznikListyExpress(false);
             break;
     }
 });
 
+// KWOTA ZAMOWIENIA
+KWOTA_ZAMOWIENIA.change((event) => {
+    KWOTA_ZAMOWIENIA.val(konwertujNaWalute(event.target.value));
+});
+
+// konwertowanie tresci inputu na wartosc dziesietna, np. 23,2 -> 23,20
+const konwertujNaWalute = (trescInputu) => {
+    return (Math.round(trescInputu.replace(',','.') * 100) / 100).toFixed(2).replace('.', ',');
+};
+
 // LISTA EXPRESS - POJAWIANIE/ZNIKANIE
 const przelacznikListyExpress = (boolean) => {
     if (boolean) {
-        KONTENER_LISTA_EXPRESS.css('display', 'block');
+        KONTENER_LISTA_EXPRESS.show();
         $('input[name="lista-express"]').prop('required', 'true');
     } else {
-        KONTENER_LISTA_EXPRESS.css('display', 'none');
+        KONTENER_LISTA_EXPRESS.hide();
         $('input[name="lista-express"]').removeAttr('required');
     }
 };
@@ -280,7 +306,7 @@ const renderujReszte = (idNumer) => {
         <label for="${idNumer}-polka-materac-fioletowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-fioletowy" value="Fioletowy">Fioletowy</label>
         <label for="${idNumer}-polka-materac-czerwony"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czerwony" value="Czerwony">Czerwony</label>
         <label for="${idNumer}-polka-materac-granatowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-granatowy" value="Granatowy">Granatowy</label>
-        <label for="${idNumer}-polka-materac-popielaty"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-popielaty" value="Popielaty">Popielaty</label>
+        <label for="${idNumer}-polka-materac-szary"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-szary" value="Szary">Szary</label>
         <label for="${idNumer}-polka-materac-antracytowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-antracytowy" value="Antracytowy">Antracytowy</label>
         <label for="${idNumer}-polka-materac-czarny"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czarny" value="Czarny">Czarny</label>
         <label for="${idNumer}-polka-materac-cappuccino"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-cappuccino" value="Cappucinno">Cappucinno</label>
@@ -292,7 +318,7 @@ const renderujReszte = (idNumer) => {
         <label for="${idNumer}-polka-podstawa-fioletowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-fioletowy" value="Fioletowy">Fioletowy</label>
         <label for="${idNumer}-polka-podstawa-czerwony"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czerwony" value="Czerwony">Czerwony</label>
         <label for="${idNumer}-polka-podstawa-granatowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-granatowy" value="Granatowy">Granatowy</label>
-        <label for="${idNumer}-polka-podstawa-popielaty"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-popielaty" value="Popielaty">Popielaty</label>
+        <label for="${idNumer}-polka-podstawa-szary"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-szary" value="Szary">Szary</label>
         <label for="${idNumer}-polka-podstawa-antracytowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-antracytowy" value="Antracytowy">Antracytowy</label>
         <label for="${idNumer}-polka-podstawa-czarny"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czarny" value="Czarny">Czarny</label>
         <label for="${idNumer}-polka-podstawa-cappuccino"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-cappuccino" value="Cappucinno">Cappucinno</label>
@@ -326,7 +352,7 @@ const stworzNowyMaterac = () => {
             <label for="${licznikMateracy}-materac-fioletowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-fioletowy" value="Fioletowy">Fioletowy</label>
             <label for="${licznikMateracy}-materac-czerwony"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czerwony" value="Czerwony">Czerwony</label>
             <label for="${licznikMateracy}-materac-granatowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-granatowy" value="Granatowy">Granatowy</label>
-            <label for="${licznikMateracy}-materac-popielaty"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-popielaty" value="Popielaty">Popielaty</label>
+            <label for="${licznikMateracy}-materac-szary"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-szary" value="Szary">Szary</label>
             <label for="${licznikMateracy}-materac-antracytowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-antracytowy" value="Antracytowy">Antracytowy</label>
             <label for="${licznikMateracy}-materac-czarny"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czarny" value="Czarny">Czarny</label>
             <label for="${licznikMateracy}-materac-cappuccino"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-cappuccino" value="Cappucinno">Cappucinno</label>
@@ -438,7 +464,7 @@ const drukujDaneOgolne = () => {
     const KWOTA = $('input[name="kwota-zamowienia"]').val();
     const WALUTA = $('input#waluta-inna').is(':checked') ? $('input[name="waluta-inna-input"]').val() : $('input[name="waluta"]:checked').val();
     const ZRODLO = $('#zrodlo-inne').is(':checked') ? $('input[name="zrodlo-inne-input"]').val() : $('input[name="zrodlo-zamowienia"]:checked').val();
-    const ZAPLACONO = $('input[name="zaplacono-data"]').val() || '';
+    const ZAPLACONO = $('#zapytanie-zaplacono-tak').is(':checked') ? $('input[name="zaplacono-data"]').val() : '';
 
     stworzTabele(
         [['Zamawiający', 'Kraj', 'Data', 'Kwota', 'Waluta']],
@@ -548,7 +574,7 @@ const drukujInne = () => {
 
 const drukujStopke = () => {
     const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val();
-    const DATA_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]').val();
+    const DATA_WYSLAC_DO_DNIA = DATEPICKER_WYSLAC_DO_DNIA.val();
     biezacaWysokosc = 530;
 
     stworzTabele(

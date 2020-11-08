@@ -13,7 +13,10 @@
 <!--<button id="testbutton">testbutton</button>-->
 <form>
     <p>Zamawiający</p>
-    <input type="text" name="zamawiajacy" id="zamawiajacy" required>
+    <input type="text" name="zamawiajacy" id="zamawiajacy" autocomplete="off" required>
+
+    <p>Data zamówienia</p>
+    <input type="text" autocomplete="off" name="data-zamowienia" required>
 
     <p>Źródło zamówienia</p>
     <label for="etsy"><input type="radio" name="zrodlo-zamowienia" id="etsy" value="Etsy" required>Etsy</label>
@@ -49,9 +52,6 @@
         </label>
     </div>
 
-    <p>Data zamówienia</p>
-    <input type="text" autocomplete="off" name="data-zamowienia" required>
-
     <div class="kontener-numer-zamowienia" style="display: none">
         <p>Numer zamówienia</p>
         <input type="text" autocomplete="off" name="numer-zamowienia">
@@ -61,10 +61,10 @@
     <input type="text" autocomplete="off" name="kwota-zamowienia" required>
 
     <p>Waluta</p>
-    <label for="eur"><input type="radio" name="waluta" id="eur" value="EUR" required>EUR</label>
-    <label for="pln"><input type="radio" name="waluta" id="pln" value="PLN" required>PLN</label>
-    <label for="usd"><input type="radio" name="waluta" id="usd" value="USD" required>USD</label>
-    <label for="gbp"><input type="radio" name="waluta" id="gbp" value="GBP" required>GBP</label>
+    <label class="waluta-input eur" for="eur"><input type="radio" name="waluta" class="eur" id="eur" value="EUR" required>EUR</label>
+    <label class="waluta-input pln" for="pln"><input type="radio" name="waluta" class="pln" id="pln" value="PLN" required>PLN</label>
+    <label class="waluta-input usd" for="usd"><input type="radio" name="waluta" class="usd" id="usd" value="USD" required>USD</label>
+    <label class="waluta-input gbp" for="gbp"><input type="radio" name="waluta" class="gbp" id="gbp" value="GBP" required>GBP</label>
     <label for="waluta-inna"><input type="radio" name="waluta" id="waluta-inna" value="Inna" required>Inna</label>
     <input type="text" name="waluta-inna-input" required disabled style="display: none">
 
