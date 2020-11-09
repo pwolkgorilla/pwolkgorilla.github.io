@@ -84,6 +84,7 @@
     <label for="polka"><input type="radio" name="produkt" id="polka" value="Półka" required>Półka</label>
     <label for="stopien"><input type="radio" name="produkt" id="stopien" value="Stopień" required>Stopień</label>
     <label for="materac"><input type="radio" name="produkt" id="materac" value="Materac" required>Materac</label>
+    <label for="pokrowiec"><input type="radio" name="produkt" id="pokrowiec" value="Pokrowiec" required>Pokrowiec</label>
     <label for="domek"><input type="radio" name="produkt" id="domek" value="Domek" required>Domek</label>
     <label for="inny"><input type="radio" name="produkt" id="inny" value="Inny" required>Inny</label>
     <br>
@@ -103,8 +104,13 @@
     <p>Uwagi do zamówienia</p>
     <textarea rows="4" cols="50" id="uwagi-do-zamowienia"></textarea>
 
-    <p>Wysłać do dnia</p>
-    <input type="text" autocomplete="off" name="data-wyslac-do-dnia">
+    <div class="checkbox wyslac">
+        <p>Czy ustalono date wysyłki?</p>
+        <label for="zapytanie-wyslac-tak"><input type="radio" name="zapytanie-wyslac" id="zapytanie-wyslac-tak" value="tak" required>Tak</label>
+        <label for="zapytanie-wyslac-nie"><input type="radio" name="zapytanie-wyslac" id="zapytanie-wyslac-nie" value="nie" required>Nie</label>
+        <br>
+        <input type="text" autocomplete="off" name="data-wyslac-do-dnia" required disabled style="display: none">
+    </div>
 
     <br>
     <input type="submit" value="Generuj PDF">
