@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.16');
+console.log('Order Creator v1.17');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
