@@ -121,7 +121,7 @@ BUTTON_DODAJ_PRODUKT.click((event) => {
     }
 });
 
-// PRZYPISANIE WALUTY DO ZRODLA ZAMOWIENIA
+// ZRODLO ZAMOWIENIA
 ZRODLO_RADIO_BUTTONY.change((event) => {
     ZRODLO_INNE_INPUT.prop('disabled', true).hide();
     WALUTA_INNA_INPUT.prop('disabled', true).hide();
@@ -130,6 +130,7 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
     $('.waluta-input').hide();
     EXPORT_KONTENER.hide();
     EXPORT_CHECKBOX.prop('checked', false);
+    KRAJ_RADIO_BUTTONY.prop('checked', false);
     NUMER_ZAMOWIENIA.removeAttr('required');
 
     switch (event.target.id) {
