@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.17');
+console.log('Order Creator v1.18');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
@@ -21,7 +21,8 @@ const WALUTA_RADIO_BUTTONY = $('input[name="waluta"]');
 const WALUTA_INNA_INPUT = $('input[name="waluta-inna-input"]');
 const KRAJ_RADIO_BUTTONY = $('input[name="kraj"]');
 const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
-const EXPORT_CHECKBOX = $('input[name="export-checkbox"]');
+const EXPORT_RADIO_TAK = $('#zapytanie-export-tak');
+const EXPORT_RADIO_NIE = $('#zapytanie-export-nie');
 const EXPORT_KONTENER = $('div.checkbox.export');
 const WYSLAC_DO_RADIO_BUTTONY = $('input[name="zapytanie-wyslac"]');
 
@@ -129,7 +130,7 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
     KONTENER_NUMER_ZAMOWIENIA.hide();
     $('.waluta-input').hide();
     EXPORT_KONTENER.hide();
-    EXPORT_CHECKBOX.prop('checked', false);
+    EXPORT_RADIO_NIE.prop('checked', true);
     KRAJ_RADIO_BUTTONY.prop('checked', false);
     NUMER_ZAMOWIENIA.removeAttr('required');
 
@@ -189,6 +190,11 @@ WALUTA_RADIO_BUTTONY.change(() => {
     $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false).css('display', 'inline-block') : WALUTA_INNA_INPUT.prop('disabled', true).hide();
 });
 
+// OZYWIENIE RADIO BUTTONOW LISTA EXPRESS
+$('input[name="zapytanie-export"]').change((event) => {
+    event.target.value === 'tak' ? przelacznikListyExpress(true) : przelacznikListyExpress(false);
+});
+
 // OZYWIENIE PRZYCISKÓW 'KRAJ'
 KRAJ_RADIO_BUTTONY.change((event) => {
     KRAJ_INNY_INPUT.prop('disabled', true).hide();
@@ -199,18 +205,19 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'ca':
         case 'ch':
             EXPORT_KONTENER.show();
-            EXPORT_CHECKBOX.prop('checked', true);
+            EXPORT_RADIO_TAK.prop('checked', true);
             przelacznikListyExpress(true);
             break;
         case 'kraj-inny':
             EXPORT_KONTENER.show();
-            EXPORT_CHECKBOX.prop('checked', false);
+            EXPORT_RADIO_NIE.prop('checked', false);
+            EXPORT_RADIO_TAK.prop('checked', false);
             KRAJ_INNY_INPUT.prop('disabled', false).css('display', 'inline-block');
             przelacznikListyExpress(true);
             break;
         default:
             EXPORT_KONTENER.hide();
-            EXPORT_CHECKBOX.prop('checked', false);
+            EXPORT_RADIO_NIE.prop('checked', true);
             przelacznikListyExpress(false);
             break;
     }
@@ -245,7 +252,7 @@ const stworzNowaPolke = () => {
         <div class="produkt produkt-polka" id="polka-numer-${licznikPolek}">
             <p>PÓŁKA NR ${licznikPolek}</p>
             <p>Liczba półek</p>
-            <input type="text" name="${licznikPolek}-liczba-polek" value="1" required>
+            <input type="text" name="${licznikPolek}-liczba-polek" required>
             <br>
         </div>
     `);
@@ -357,7 +364,7 @@ const stworzNowyMaterac = () => {
         <div class="produkt produkt-materac" id="materac-numer-${licznikMateracy}">
             <p>MATERAC NR ${licznikMateracy}</p>
             <p>Liczba materacy</p>
-            <input type="text" name="${licznikMateracy}-liczba-materacy" value="1" required>
+            <input type="text" name="${licznikMateracy}-liczba-materacy" required>
             <p>Pasuje do półki:</p>
             <label for="${licznikMateracy}-dlugosc-60-materac"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-60-materac" value="60 cm" required>60 cm</label>
             <label for="${licznikMateracy}-dlugosc-75-materac"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-75-materac" value="75 cm" required>75 cm</label>
@@ -393,7 +400,7 @@ const stworzNowyPokrowiec = () => {
         <div class="produkt produkt-pokrowiec" id="pokrowiec-numer-${licznikPokrowcow}">
             <p>POKROWIEC NR ${licznikPokrowcow}</p>
             <p>Liczba pokrowcow</p>
-            <input type="text" name="${licznikPokrowcow}-liczba-pokrowcow" value="1" required>
+            <input type="text" name="${licznikPokrowcow}-liczba-pokrowcow" required>
             <p>Pasuje do półki:</p>
             <label for="${licznikPokrowcow}-dlugosc-60-pokrowiec"><input type="radio" name="${licznikPokrowcow}-dlugosc-pokrowiec" id="${licznikPokrowcow}-dlugosc-60-pokrowiec" value="60 cm" required>60 cm</label>
             <label for="${licznikPokrowcow}-dlugosc-75-pokrowiec"><input type="radio" name="${licznikPokrowcow}-dlugosc-pokrowiec" id="${licznikPokrowcow}-dlugosc-75-pokrowiec" value="75 cm" required>75 cm</label>
@@ -429,7 +436,7 @@ const stworzNowyStopien = () => {
         <div class="produkt produkt-stopien" id="stopien-numer-${licznikStopni}">
             <p>STOPIEŃ NR ${licznikStopni}</p>
             <p>Liczba stopni</p>
-            <input type="text" name="${licznikStopni}-liczba-stopni" value="1" required>
+            <input type="text" name="${licznikStopni}-liczba-stopni" required>
             <p>Filc</p>
             <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy" required>Kremowy</label>
             <label for="${licznikStopni}-stopien-filc-bezowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bezowy" value="Beżowy" required>Beżowy</label>
@@ -473,7 +480,7 @@ const stworzNowyInny = () => {
             <p>Nazwa:</p>
             <input type="text" name="${licznikInnych}-nazwa-inny" required>
             <p>Liczba:</p>
-            <input type="text" name="${licznikInnych}-liczba-inny" value="1" required>
+            <input type="text" name="${licznikInnych}-liczba-inny" required>
             <p>Opis</p>
             <textarea rows="3" cols="50" id="${licznikInnych}-opis-inny"></textarea>
         </div>
@@ -675,7 +682,7 @@ const drukujStopke = () => {
         300
     );
 
-    if (EXPORT_CHECKBOX.is(':checked')) {
+    if (EXPORT_RADIO_TAK.is(':checked')) {
         stworzTabele(
             [['Export']],
             [['']],
