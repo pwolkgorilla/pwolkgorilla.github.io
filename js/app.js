@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.18');
+console.log('Order Creator v1.19');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
@@ -251,13 +251,14 @@ const stworzNowaPolke = () => {
     KONTENER_LISTA_PRODUKTOW.append(`
         <div class="produkt produkt-polka" id="polka-numer-${licznikPolek}">
             <p>PÓŁKA NR ${licznikPolek}</p>
-            <p>Liczba półek</p>
+            <p>Ilość półek</p>
             <input type="text" name="${licznikPolek}-liczba-polek" required>
             <br>
         </div>
     `);
     renderujKsztalt(licznikPolek);
     dodajPrzyciskUsun('#polka-numer-'+licznikPolek);
+    focusNaLiczbe(`input[name="${licznikPolek}-liczba-polek"]`);
 };
 
 const renderujKsztalt = (idNumer) => {
@@ -363,7 +364,7 @@ const stworzNowyMaterac = () => {
     KONTENER_LISTA_PRODUKTOW.append(`
         <div class="produkt produkt-materac" id="materac-numer-${licznikMateracy}">
             <p>MATERAC NR ${licznikMateracy}</p>
-            <p>Liczba materacy</p>
+            <p>Ilość materacy</p>
             <input type="text" name="${licznikMateracy}-liczba-materacy" required>
             <p>Pasuje do półki:</p>
             <label for="${licznikMateracy}-dlugosc-60-materac"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-60-materac" value="60 cm" required>60 cm</label>
@@ -390,6 +391,7 @@ const stworzNowyMaterac = () => {
     `);
 
     dodajPrzyciskUsun('#materac-numer-'+licznikMateracy);
+    focusNaLiczbe(`input[name="${licznikMateracy}-liczba-materacy"]`);
 };
 
 // TWORZENIE NOWEGO MATERACA
@@ -399,7 +401,7 @@ const stworzNowyPokrowiec = () => {
     KONTENER_LISTA_PRODUKTOW.append(`
         <div class="produkt produkt-pokrowiec" id="pokrowiec-numer-${licznikPokrowcow}">
             <p>POKROWIEC NR ${licznikPokrowcow}</p>
-            <p>Liczba pokrowcow</p>
+            <p>Ilość pokrowcow</p>
             <input type="text" name="${licznikPokrowcow}-liczba-pokrowcow" required>
             <p>Pasuje do półki:</p>
             <label for="${licznikPokrowcow}-dlugosc-60-pokrowiec"><input type="radio" name="${licznikPokrowcow}-dlugosc-pokrowiec" id="${licznikPokrowcow}-dlugosc-60-pokrowiec" value="60 cm" required>60 cm</label>
@@ -426,6 +428,7 @@ const stworzNowyPokrowiec = () => {
     `);
 
     dodajPrzyciskUsun('#pokrowiec-numer-'+licznikPokrowcow);
+    focusNaLiczbe(`input[name="${licznikPokrowcow}-liczba-pokrowcow"]`);
 };
 
 // TWORZENIE NOWEGO STOPNIA
@@ -435,7 +438,7 @@ const stworzNowyStopien = () => {
     KONTENER_LISTA_PRODUKTOW.append(`
         <div class="produkt produkt-stopien" id="stopien-numer-${licznikStopni}">
             <p>STOPIEŃ NR ${licznikStopni}</p>
-            <p>Liczba stopni</p>
+            <p>Ilość stopni</p>
             <input type="text" name="${licznikStopni}-liczba-stopni" required>
             <p>Filc</p>
             <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy" required>Kremowy</label>
@@ -468,6 +471,7 @@ const stworzNowyStopien = () => {
     `);
 
     dodajPrzyciskUsun('#stopien-numer-'+licznikStopni);
+    focusNaLiczbe(`input[name="${licznikStopni}-liczba-stopni"]`);
 };
 
 // TWORZENIE NIESTANDARDOWEGO PRODUKTU
@@ -479,7 +483,7 @@ const stworzNowyInny = () => {
             <p>INNY NR ${licznikInnych}</p>
             <p>Nazwa:</p>
             <input type="text" name="${licznikInnych}-nazwa-inny" required>
-            <p>Liczba:</p>
+            <p>Ilość:</p>
             <input type="text" name="${licznikInnych}-liczba-inny" required>
             <p>Opis</p>
             <textarea rows="3" cols="50" id="${licznikInnych}-opis-inny"></textarea>
@@ -487,6 +491,7 @@ const stworzNowyInny = () => {
     `);
 
     dodajPrzyciskUsun('#inny-numer-'+licznikInnych);
+    focusNaLiczbe(`input[name="${licznikInnych}-nazwa-inny"]`);
 };
 
 // DODAWANIE DELETE BUTTONA
@@ -520,6 +525,11 @@ const dodajPrzyciskUsun = (selektor) => {
                 break;
         }
     });
+};
+
+// FOCUSOWANIE NA INPUCIE LICZBY POLEK
+const focusNaLiczbe = (selektor) => {
+    $(selektor).focus();
 };
 
 const drukujPDF = () => {
@@ -778,9 +788,9 @@ const dzisiejszaData = () => {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); //Styczeń to 0!
-    const yyyy = today.getFullYear();
+    const yy = String(today.getFullYear()).substr(-2);
 
-    return yyyy + mm + dd;
+    return yy + mm + dd;
 };
 
 // CZYSZCZENIE LISTY PRODUKTÓW
@@ -794,7 +804,7 @@ BUTTON_WYCZYSC_PRODUKTY.click((event) => {
 if (BUTTON_TESTOWY.length) {
     BUTTON_TESTOWY.click(() => {
         drukujPDF();
-        PDF.save('Zamowienie_' + dzisiejszaData());
+        PDF.save('Zamowienie ' + dzisiejszaData() + ' ' + $('#zamawiajacy').val());
         wyczyscDaneOperacyjnePDF();
         PDF = new jsPDF('p', 'pt');
     });
