@@ -814,7 +814,7 @@ if (BUTTON_TESTOWY.length) {
 MAIN_FORM.submit((event) => {
     event.preventDefault();
     drukujPDF();
-    PDF.save('Zamowienie_' + dzisiejszaData());
+    PDF.save('Zamowienie ' + dzisiejszaData() + ' ' + $('#zamawiajacy').val());
     wyczyscDaneOperacyjnePDF();
     PDF = new jsPDF('p', 'pt');
 });
