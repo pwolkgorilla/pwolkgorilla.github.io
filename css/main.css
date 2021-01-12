@@ -38,3 +38,7 @@ div.produkt {
     max-width: 500px;
     margin: 10px auto;
 }
+
+button#produkt-dodaj {
+    margin-top: 10px;
+}

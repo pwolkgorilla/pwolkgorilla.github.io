@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.20');
+console.log('Order Creator v1.21');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
@@ -47,7 +47,7 @@ let PDF = new jsPDF('p', 'pt');
 
 let biezacaWysokosc = 50;
 let biezacyLewyMargines = 60;
-let czyJestFalaWRzedzie = false;
+// let czyJestFalaWRzedzie = false;
 
 // USTAWIENIA STRONY
 window.onbeforeunload = function () {
@@ -577,8 +577,6 @@ const drukujDaneOgolne = () => {
             200
         );
     }
-
-    biezacaWysokosc += 60;
 };
 
 const drukujPolki = () => {
@@ -594,25 +592,35 @@ const drukujPolki = () => {
         switch (KSZTALT) {
             case 'Łuk':
             case 'Łuk Podwójny':
-                stworzTabeleProduktu([
-                    {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
-                    {title: 'Kształt', value: KSZTALT},
-                    {title: 'Długość', value: DLUGOSC},
-                    {title: 'Materac', value: MATERAC},
-                    {title: 'Podstawa', value: PODSTAWA}
-                ]);
+                // stworzTabeleProduktu([
+                //     {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
+                //     {title: 'Kształt', value: KSZTALT},
+                //     {title: 'Długość', value: DLUGOSC},
+                //     {title: 'Materac', value: MATERAC},
+                //     {title: 'Podstawa', value: PODSTAWA}
+                // ]);
+                stworzTabele(
+                    [['PÓŁKA', 'Kształt', 'Długość', 'Materac', 'Podstawa']],
+                    [['Sztuk: ' + LICZBA_POLEK, KSZTALT, DLUGOSC, MATERAC, PODSTAWA]],
+                    60
+                );
                 break;
             case 'Fala':
-                czyJestFalaWRzedzie = true;
-                stworzTabeleProduktu([
-                    {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
-                    {title: 'Kształt', value: KSZTALT},
-                    {title: 'Długość', value: DLUGOSC},
-                    {title: 'Symetria', value: SYMETRIA},
-                    {title: 'Strona', value: STRONA},
-                    {title: 'Materac', value: MATERAC},
-                    {title: 'Podstawa', value: PODSTAWA}
-                ]);
+                // czyJestFalaWRzedzie = true;
+                // stworzTabeleProduktu([
+                //     {title: 'PÓŁKA', value: 'Sztuk: ' + LICZBA_POLEK},
+                //     {title: 'Kształt', value: KSZTALT},
+                //     {title: 'Długość', value: DLUGOSC},
+                //     {title: 'Symetria', value: SYMETRIA},
+                //     {title: 'Strona', value: STRONA},
+                //     {title: 'Materac', value: MATERAC},
+                //     {title: 'Podstawa', value: PODSTAWA}
+                // ]);
+                stworzTabele(
+                    [['PÓŁKA', 'Kształt', 'Długość', 'Symetria', 'Strona', 'Materac', 'Podstawa']],
+                    [['Sztuk: ' + LICZBA_POLEK, KSZTALT, DLUGOSC, SYMETRIA, STRONA, MATERAC, PODSTAWA]],
+                    60
+                );
                 break;
         }
     }
@@ -624,12 +632,17 @@ const drukujStopnie = () => {
         const FILC = $('input[name="' + idNumer + '-stopien-filc"]:checked').val();
         const PLATFORMA = $('input[name="' + idNumer + '-stopien-platforma"]:checked').val();
         const OSLONA = $('input[name="' + idNumer + '-stopien-oslona"]:checked').val();
-        stworzTabeleProduktu([
-            {title: 'STOPIEŃ', value: 'Sztuk: ' + LICZBA_STOPNI},
-            {title: 'Filc', value: FILC},
-            {title: 'Platforma', value: PLATFORMA},
-            {title: 'Osłona', value: OSLONA}
-        ]);
+        // stworzTabeleProduktu([
+        //     {title: 'STOPIEŃ', value: 'Sztuk: ' + LICZBA_STOPNI},
+        //     {title: 'Filc', value: FILC},
+        //     {title: 'Platforma', value: PLATFORMA},
+        //     {title: 'Osłona', value: OSLONA}
+        // ]);
+        stworzTabele(
+            [['STOPIEŃ', 'Filc', 'Platforma', 'Osłona']],
+            [['Sztuk: ' + LICZBA_STOPNI, FILC, PLATFORMA, OSLONA]],
+            60
+        );
     }
 };
 
@@ -638,11 +651,16 @@ const drukujMaterace = () => {
         const LICZBA_MATERACY = $('input[name="' + idNumer + '-liczba-materacy"]').val();
         const DLUGOSC = $('input[name="' + idNumer + '-dlugosc-materac"]:checked').val();
         const KOLOR = $('input[name="' + idNumer + '-materac"]:checked').val();
-        stworzTabeleProduktu([
-            {title: 'MATERAC', value: 'Sztuk: ' + LICZBA_MATERACY},
-            {title: 'Długość', value: DLUGOSC},
-            {title: 'Kolor', value: KOLOR}
-        ]);
+        // stworzTabeleProduktu([
+        //     {title: 'MATERAC', value: 'Sztuk: ' + LICZBA_MATERACY},
+        //     {title: 'Długość', value: DLUGOSC},
+        //     {title: 'Kolor', value: KOLOR}
+        // ]);
+        stworzTabele(
+            [['MATERAC', 'Długość', 'Kolor']],
+            [['Sztuk: ' + LICZBA_MATERACY, DLUGOSC, KOLOR]],
+            60
+        );
     }
 };
 
@@ -651,11 +669,16 @@ const drukujPokrowce = () => {
         const LICZBA_POKROWCOW = $('input[name="' + idNumer + '-liczba-pokrowcow"]').val();
         const DLUGOSC = $('input[name="' + idNumer + '-dlugosc-pokrowiec"]:checked').val();
         const KOLOR = $('input[name="' + idNumer + '-pokrowiec"]:checked').val();
-        stworzTabeleProduktu([
-            {title: 'POKROWIEC', value: 'Sztuk: ' + LICZBA_POKROWCOW},
-            {title: 'Długość', value: DLUGOSC},
-            {title: 'Kolor', value: KOLOR}
-        ]);
+        // stworzTabeleProduktu([
+        //     {title: 'POKROWIEC', value: 'Sztuk: ' + LICZBA_POKROWCOW},
+        //     {title: 'Długość', value: DLUGOSC},
+        //     {title: 'Kolor', value: KOLOR}
+        // ]);
+        stworzTabele(
+            [['POKROWIEC', 'Długość', 'Kolor']],
+            [['Sztuk: ' + LICZBA_POKROWCOW, DLUGOSC, KOLOR]],
+            60
+        );
     }
 };
 
@@ -664,15 +687,20 @@ const drukujInne = () => {
         const NAZWA = $('input[name="' + idNumer + '-nazwa-inny"]').val();
         const LICZBA = $('input[name="' + idNumer + '-liczba-inny"]').val();
         const OPIS = $('#' + idNumer + '-opis-inny').val();
+        // stworzTabele(
+        //     [[NAZWA]],
+        //     [['Sztuk: ' + LICZBA], [OPIS]],
+        //     false,
+        //     240,
+        //     biezacyLewyMargines,
+        //     false
+        // );
         stworzTabele(
-            [[NAZWA]],
-            [['Sztuk: ' + LICZBA], [OPIS]],
-            false,
-            240,
-            biezacyLewyMargines,
-            false
+            [[NAZWA, 'Opis']],
+            [['Sztuk: ' + LICZBA, OPIS]],
+            60
         );
-        skorygujPolozenieTabeli();
+        // skorygujPolozenieTabeli();
     }
 };
 
@@ -733,59 +761,54 @@ const stworzTabele = (zbiorHead, zbiorBody, wzrostWysokosci, tableWidth, lewyMar
     });
 };
 
-const stworzTabeleProduktu = (zbiorBody) => {
-    PDF.autoTable({
-        theme: 'plain',
-        startY: biezacaWysokosc,
-        styles: {
-            font: 'Roboto-Regular',
-            fontSize: 12,
-            lineColor: 0,
-            lineWidth: 1
-        },
-        tableWidth: 240,
-        columnStyles: {
-            title: {
-                font: 'Roboto-Bold',
-                fontStyle: 'bold'
-            },
-            value: {
-                cellWidth: 140
-            }
-        },
-        body: zbiorBody,
-        margin: { left: biezacyLewyMargines },
-        columns: [
-            { dataKey: 'title' },
-            { dataKey: 'value' }
-        ]
-    });
-    skorygujPolozenieTabeli();
-};
+// const stworzTabeleProduktu = (zbiorBody) => {
+//     PDF.autoTable({
+//         theme: 'plain',
+//         startY: biezacaWysokosc,
+//         styles: {
+//             font: 'Roboto-Regular',
+//             fontSize: 12,
+//             lineColor: 0,
+//             lineWidth: 1
+//         },
+//         tableWidth: 240,
+//         columnStyles: {
+//             title: {
+//                 font: 'Roboto-Bold',
+//                 fontStyle: 'bold'
+//             },
+//             value: {
+//                 cellWidth: 140
+//             }
+//         },
+//         body: zbiorBody,
+//         margin: { left: biezacyLewyMargines },
+//         columns: [
+//             { dataKey: 'title' },
+//             { dataKey: 'value' }
+//         ]
+//     });
+//     skorygujPolozenieTabeli();
+// };
 
-const skorygujPolozenieTabeli = () => {
-    switch (biezacyLewyMargines) {
-        case 60:
-            biezacyLewyMargines = 310;
-            break;
-        case 310:
-            biezacyLewyMargines = 60;
-            czyJestFalaWRzedzie ? biezacaWysokosc += 180 : biezacaWysokosc += 132;
-            czyJestFalaWRzedzie = false;
-            break;
-    }
-};
+// const skorygujPolozenieTabeli = () => {
+//     switch (biezacyLewyMargines) {
+//         case 60:
+//             biezacyLewyMargines = 310;
+//             break;
+//         case 310:
+//             biezacyLewyMargines = 60;
+//             czyJestFalaWRzedzie ? biezacaWysokosc += 180 : biezacaWysokosc += 132;
+//             czyJestFalaWRzedzie = false;
+//             break;
+//     }
+// };
 
 // CZYSZCZENIE DANYCH OPERACYJNYCH DO GENEROWANIA PDF
 const wyczyscDaneOperacyjnePDF = () => {
     biezacyLewyMargines = 60;
     biezacaWysokosc = 50;
-    czyJestFalaWRzedzie = false;
-};
-
-// CZYSZCZENIE DANYCH OPERACYJNYCH DO GENEROWANIA PRODUKTOW HTML
-const wyczyscDaneOperacyjneHTML = () => {
-    licznikMateracy = licznikPolek = licznikStopni = licznikPokrowcow = licznikDomkow = licznikInnych = 0;
+    // czyJestFalaWRzedzie = false;
 };
 
 // GENEROWANIE DZISIEJSZEJ DATY
