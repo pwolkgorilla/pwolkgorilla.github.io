@@ -1,10 +1,9 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.19');
+console.log('Order Creator v1.20');
 
 const MAIN_FORM = $('form');
 const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
-const BUTTON_WYCZYSC_PRODUKTY = $('button#wyczysc-produkty');
 const BUTTON_TESTOWY = $('#testbutton');
 const ZAPLACONO_RADIO_BUTTONY = $('input[name="zapytanie-zaplacono"]');
 const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
@@ -141,7 +140,6 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
             break;
         case 'etsy':
             $('.eur').prop('checked', 'true').show();
-            $('#zapytanie-zaplacono-tak').prop('checked', 'true');
             DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block');
             DATEPICKER_ZAPLACONO.val(DATEPICKER_DATA_ZAMOWIENIA.val());
             break;
@@ -167,6 +165,8 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
         case 'ebay-uk':
             $('.gbp').prop('checked', 'true').show();
             $('#uk').prop('checked', 'true');
+            EXPORT_KONTENER.show();
+            EXPORT_RADIO_TAK.prop('checked', true);
             break;
         case 'zrodlo-inne':
             ZRODLO_INNE_INPUT.prop('disabled', false).css('display', 'inline-block');
@@ -177,7 +177,7 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
 
 // OZYWIENIE INPUTU 'ZAPŁACONO'
 ZAPLACONO_RADIO_BUTTONY.change((event) => {
-    event.target.id === 'zapytanie-zaplacono-tak' ? DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block').focus() : DATEPICKER_ZAPLACONO.prop('disabled', true).hide();
+    event.target.id === 'zapytanie-zaplacono-tak' ? DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block').val(DATEPICKER_DATA_ZAMOWIENIA.val()) : DATEPICKER_ZAPLACONO.prop('disabled', true).hide();
 });
 
 // OZYWIENIE INPUTU 'WYSŁAĆ DO'
@@ -203,10 +203,15 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'usa':
         case 'au':
         case 'ca':
-        case 'ch':
             EXPORT_KONTENER.show();
             EXPORT_RADIO_TAK.prop('checked', true);
             przelacznikListyExpress(true);
+            break;
+        case 'uk':
+        case 'ch':
+        case 'no':
+            EXPORT_KONTENER.show();
+            EXPORT_RADIO_TAK.prop('checked', true);
             break;
         case 'kraj-inny':
             EXPORT_KONTENER.show();
@@ -792,14 +797,6 @@ const dzisiejszaData = () => {
 
     return yy + mm + dd;
 };
-
-// CZYSZCZENIE LISTY PRODUKTÓW
-BUTTON_WYCZYSC_PRODUKTY.click((event) => {
-    event.preventDefault();
-    wyczyscDaneOperacyjnePDF();
-    wyczyscDaneOperacyjneHTML();
-    $('.produkt').remove();
-});
 
 if (BUTTON_TESTOWY.length) {
     BUTTON_TESTOWY.click(() => {
