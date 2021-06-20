@@ -1,10 +1,10 @@
 window.jsPDF = window.jspdf.jsPDF;
 
-console.log('Order Creator v1.21');
+console.log('Order Creator v1.22');
 
 const MAIN_FORM = $('form');
-const BUTTON_DODAJ_PRODUKT = $('button#produkt-dodaj');
 const BUTTON_TESTOWY = $('#testbutton');
+const ZAMAWIAJACY_INPUT = $('#zamawiajacy');
 const ZAPLACONO_RADIO_BUTTONY = $('input[name="zapytanie-zaplacono"]');
 const DATEPICKER_ZAPLACONO = $('input[name="zaplacono-data"]');
 const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
@@ -23,7 +23,6 @@ const KRAJ_INNY_INPUT = $('input[name="kraj-inny-input"]');
 const EXPORT_RADIO_TAK = $('#zapytanie-export-tak');
 const EXPORT_RADIO_NIE = $('#zapytanie-export-nie');
 const EXPORT_KONTENER = $('div.checkbox.export');
-const WYSLAC_DO_RADIO_BUTTONY = $('input[name="zapytanie-wyslac"]');
 
 // DANE Z PAMIECI PODRECZNEJ (do kalendarzy)
 let ostatniaDataZamowienia = localStorage['ostatniaDataZamowienia'] || null;
@@ -55,7 +54,12 @@ window.onbeforeunload = function () {
 };
 
 $(document).ready(() => {
-    $('#zamawiajacy').focus();
+    ZAMAWIAJACY_INPUT.focus();
+});
+
+// DYNAMICZNY TITLE PAGE
+ZAMAWIAJACY_INPUT.on('input',function(event){
+    document.title = event.target.value;
 });
 
 // DATEPICKER KONFIGURACJA
@@ -95,11 +99,10 @@ DATEPICKER_WYSLAC_DO_DNIA.datepicker({
 });
 
 // GENEROWANIE PRODUKTU
-BUTTON_DODAJ_PRODUKT.click((event) => {
+$('input[name="produkt"]').change((event) => {
     event.preventDefault();
 
-    const radioProdukt = $('input[name="produkt"]:checked').val();
-    switch (radioProdukt) {
+    switch (event.target.value) {
         case 'Półka':
             stworzNowaPolke();
             break;
@@ -119,6 +122,8 @@ BUTTON_DODAJ_PRODUKT.click((event) => {
             stworzNowyInny();
             break;
     }
+
+    $(event.target).prop('checked',false);
 });
 
 // ZRODLO ZAMOWIENIA
@@ -177,12 +182,15 @@ ZRODLO_RADIO_BUTTONY.change((event) => {
 
 // OZYWIENIE INPUTU 'ZAPŁACONO'
 ZAPLACONO_RADIO_BUTTONY.change((event) => {
-    event.target.id === 'zapytanie-zaplacono-tak' ? DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block').val(DATEPICKER_DATA_ZAMOWIENIA.val()) : DATEPICKER_ZAPLACONO.prop('disabled', true).hide();
-});
-
-// OZYWIENIE INPUTU 'WYSŁAĆ DO'
-WYSLAC_DO_RADIO_BUTTONY.change((event) => {
-    event.target.id === 'zapytanie-wyslac-tak' ? DATEPICKER_WYSLAC_DO_DNIA.prop('disabled', false).css('display', 'inline-block').focus() : DATEPICKER_WYSLAC_DO_DNIA.prop('disabled', true).hide();
+    if (event.target.id === 'zapytanie-zaplacono-tak') {
+        DATEPICKER_ZAPLACONO.prop('disabled', false).css('display', 'inline-block').val(DATEPICKER_DATA_ZAMOWIENIA.val());
+        DATEPICKER_WYSLAC_DO_DNIA.prop('disabled', false).css('display', 'inline-block').focus();
+        $('#data-wysylki-title').show();
+    } else {
+        DATEPICKER_ZAPLACONO.prop('disabled', true).hide();
+        DATEPICKER_WYSLAC_DO_DNIA.prop('disabled', true).hide();
+        $('#data-wysylki-title').hide();
+    }
 });
 
 // OZYWIENIE PRZYCISKÓW 'WALUTA'
@@ -548,7 +556,7 @@ const drukujPDF = () => {
 };
 
 const drukujDaneOgolne = () => {
-    const ZAMAWIAJACY = $('#zamawiajacy').val();
+    const ZAMAWIAJACY = ZAMAWIAJACY_INPUT.val();
     const KRAJ = $('#kraj-inny').is(':checked') ? $('input[name="kraj-inny-input"]').val() : $('input[name="kraj"]:checked').val();
     const DATA = $('input[name="data-zamowienia"]').val();
     const NUMER = NUMER_ZAMOWIENIA.is(':visible') ? NUMER_ZAMOWIENIA.val() : '';
@@ -706,7 +714,7 @@ const drukujInne = () => {
 
 const drukujStopke = () => {
     const UWAGI_DO_ZAMOWIENIA = $('#uwagi-do-zamowienia').val();
-    const DATA_WYSLAC_DO_DNIA = $('#zapytanie-wyslac-tak').is(':checked') ? DATEPICKER_WYSLAC_DO_DNIA.val() : '';
+    const DATA_WYSLAC_DO_DNIA = $('#zapytanie-zaplacono-tak').is(':checked') ? DATEPICKER_WYSLAC_DO_DNIA.val() : '';
     biezacaWysokosc = 530;
 
     stworzTabele(
@@ -824,7 +832,7 @@ const dzisiejszaData = () => {
 if (BUTTON_TESTOWY.length) {
     BUTTON_TESTOWY.click(() => {
         drukujPDF();
-        PDF.save('Zamowienie ' + dzisiejszaData() + ' ' + $('#zamawiajacy').val());
+        PDF.save('Zamówienie ' + dzisiejszaData() + ' ' + ZAMAWIAJACY_INPUT.val());
         wyczyscDaneOperacyjnePDF();
         PDF = new jsPDF('p', 'pt');
     });
@@ -834,7 +842,7 @@ if (BUTTON_TESTOWY.length) {
 MAIN_FORM.submit((event) => {
     event.preventDefault();
     drukujPDF();
-    PDF.save('Zamowienie ' + dzisiejszaData() + ' ' + $('#zamawiajacy').val());
+    PDF.save('Zamówienie ' + dzisiejszaData() + ' ' + ZAMAWIAJACY_INPUT.val());
     wyczyscDaneOperacyjnePDF();
     PDF = new jsPDF('p', 'pt');
 });

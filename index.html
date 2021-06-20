@@ -18,6 +18,17 @@
     <p>Data zamówienia</p>
     <input type="text" autocomplete="off" name="data-zamowienia" required>
 
+    <div class="checkbox zaplacono">
+        <p>Czy zapłacono?</p>
+        <label for="zapytanie-zaplacono-tak"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-tak" value="tak" required>Tak</label>
+        <label for="zapytanie-zaplacono-nie"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-nie" value="nie" required>Nie</label>
+        <br>
+        <input type="text" autocomplete="off" name="zaplacono-data" required disabled style="display: none">
+    </div>
+
+    <p id="data-wysylki-title" style="display: none">Data wysyłki</p>
+    <input type="text" autocomplete="off" name="data-wyslac-do-dnia" required disabled style="display: none">
+
     <p>Źródło zamówienia</p>
     <label for="etsy"><input type="radio" name="zrodlo-zamowienia" id="etsy" value="Etsy" required>Etsy</label>
     <label for="ebay-de"><input type="radio" name="zrodlo-zamowienia" id="ebay-de" value="eBay DE" required>eBay DE</label>
@@ -68,31 +79,16 @@
     <label for="waluta-inna"><input type="radio" name="waluta" id="waluta-inna" value="Inna" required>Inna</label>
     <input type="text" name="waluta-inna-input" required disabled style="display: none">
 
-    <div class="checkbox zaplacono">
-        <p>Czy zapłacono?</p>
-        <label for="zapytanie-zaplacono-tak"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-tak" value="tak" required>Tak</label>
-        <label for="zapytanie-zaplacono-nie"><input type="radio" name="zapytanie-zaplacono" id="zapytanie-zaplacono-nie" value="nie" required>Nie</label>
-        <br>
-        <input type="text" autocomplete="off" name="zaplacono-data" required disabled style="display: none">
-    </div>
+    <div class="lista-produktow"></div>
 
-    <div class="lista-produktow">
-        <p>LISTA PRODUKTÓW:</p>
-    </div>
+    <p>Zamówiono produkt:</p>
+    <label for="polka"><input type="radio" name="produkt" id="polka" value="Półka">Półka</label>
+    <label for="stopien"><input type="radio" name="produkt" id="stopien" value="Stopień">Stopień</label>
+    <label for="materac"><input type="radio" name="produkt" id="materac" value="Materac">Materac</label>
+    <label for="pokrowiec"><input type="radio" name="produkt" id="pokrowiec" value="Pokrowiec">Pokrowiec</label>
+    <label for="domek"><input type="radio" name="produkt" id="domek" value="Domek">Domek</label>
+    <label for="inny"><input type="radio" name="produkt" id="inny" value="Inny">Inny</label>
 
-    <p>Dodawanie nowych produktów:</p>
-    <label for="polka"><input type="radio" name="produkt" id="polka" value="Półka" required>Półka</label>
-    <label for="stopien"><input type="radio" name="produkt" id="stopien" value="Stopień" required>Stopień</label>
-    <label for="materac"><input type="radio" name="produkt" id="materac" value="Materac" required>Materac</label>
-    <label for="pokrowiec"><input type="radio" name="produkt" id="pokrowiec" value="Pokrowiec" required>Pokrowiec</label>
-    <label for="domek"><input type="radio" name="produkt" id="domek" value="Domek" required>Domek</label>
-    <label for="inny"><input type="radio" name="produkt" id="inny" value="Inny" required>Inny</label>
-    <br>
-    <button id="produkt-dodaj">Dodaj Produkt</button>
-
-    <p>Czy wysłano zapytanie o telefon/dodatki?</p>
-    <label for="zapytanie-telefon-dodatki-tak"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-tak" value="tak" required>Tak</label>
-    <label for="zapytanie-telefon-dodatki-nie"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-nie" value="nie" required>Nie</label>
 
     <div class="kontener-lista-express" style="display: none">
         <p>Czy wpisano na listę express?</p>
@@ -100,16 +96,12 @@
         <label for="lista-express-nie"><input type="radio" name="lista-express" id="lista-express-nie" value="nie">Nie</label>
     </div>
 
+    <p>Czy wysłano wiadomość do klienta</p>
+    <label for="zapytanie-telefon-dodatki-tak"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-tak" value="tak" required>Tak</label>
+    <label for="zapytanie-telefon-dodatki-nie"><input type="radio" name="zapytanie-telefon-dodatki" id="zapytanie-telefon-dodatki-nie" value="nie" required>Nie</label>
+
     <p>Uwagi do zamówienia</p>
     <textarea rows="4" cols="50" id="uwagi-do-zamowienia"></textarea>
-
-    <div class="checkbox wyslac">
-        <p>Czy ustalono datę wysyłki?</p>
-        <label for="zapytanie-wyslac-tak"><input type="radio" name="zapytanie-wyslac" id="zapytanie-wyslac-tak" value="tak" required>Tak</label>
-        <label for="zapytanie-wyslac-nie"><input type="radio" name="zapytanie-wyslac" id="zapytanie-wyslac-nie" value="nie" required>Nie</label>
-        <br>
-        <input type="text" autocomplete="off" name="data-wyslac-do-dnia" required disabled style="display: none">
-    </div>
 
     <br>
     <input type="submit" value="Generuj PDF">
