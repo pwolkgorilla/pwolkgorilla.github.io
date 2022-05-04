@@ -454,9 +454,10 @@ const stworzNowyStopien = () => {
             <p>Ilość stopni</p>
             <input type="text" name="${licznikStopni}-liczba-stopni" required>
             <p>Filc</p>
+            <label for="${licznikStopni}-stopien-filc-bialy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bialy" value="Biały" required>Biały</label>
             <label for="${licznikStopni}-stopien-filc-kremowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-kremowy" value="Kremowy" required>Kremowy</label>
             <label for="${licznikStopni}-stopien-filc-bezowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-bezowy" value="Beżowy" required>Beżowy</label>
-            <label for="${licznikStopni}-stopien-filc-szaryjasny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szaryjasny" value="Jasny szary" required>Jasny szary</label>
+            <label for="${licznikStopni}-stopien-filc-szary"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-szary" value="Szary" required>Szary</label>
             <label for="${licznikStopni}-stopien-filc-grafitowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-grafitowy" value="Grafitowy" required>Grafitowy</label>
             <label for="${licznikStopni}-stopien-filc-czarny"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-czarny" value="Czarny" required>Czarny</label>
             <label for="${licznikStopni}-stopien-filc-burgundowy"><input type="radio" name="${licznikStopni}-stopien-filc" id="${licznikStopni}-stopien-filc-burgundowy" value="Burgundowy" required>Burgundowy</label>
