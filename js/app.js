@@ -11,7 +11,6 @@ const DATEPICKER_DATA_ZAMOWIENIA = $('input[name="data-zamowienia"]');
 const DATEPICKER_WYSLAC_DO_DNIA = $('input[name="data-wyslac-do-dnia"]');
 const KONTENER_LISTA_PRODUKTOW = $('div.lista-produktow');
 const KONTENER_NUMER_ZAMOWIENIA = $('div.kontener-numer-zamowienia');
-const KONTENER_LISTA_EXPRESS = $('div.kontener-lista-express');
 const NUMER_ZAMOWIENIA = $('input[name="numer-zamowienia"]');
 const KWOTA_ZAMOWIENIA = $('input[name="kwota-zamowienia"]');
 const ZRODLO_RADIO_BUTTONY = $('input[name="zrodlo-zamowienia"]');
@@ -198,11 +197,6 @@ WALUTA_RADIO_BUTTONY.change(() => {
     $('input#waluta-inna').is(':checked') ? WALUTA_INNA_INPUT.prop('disabled', false).css('display', 'inline-block') : WALUTA_INNA_INPUT.prop('disabled', true).hide();
 });
 
-// OZYWIENIE RADIO BUTTONOW LISTA EXPRESS
-$('input[name="zapytanie-export"]').change((event) => {
-    event.target.value === 'tak' ? przelacznikListyExpress(true) : przelacznikListyExpress(false);
-});
-
 // OZYWIENIE PRZYCISKÓW 'KRAJ'
 KRAJ_RADIO_BUTTONY.change((event) => {
     KRAJ_INNY_INPUT.prop('disabled', true).hide();
@@ -213,7 +207,6 @@ KRAJ_RADIO_BUTTONY.change((event) => {
         case 'ca':
             EXPORT_KONTENER.show();
             EXPORT_RADIO_TAK.prop('checked', true);
-            przelacznikListyExpress(true);
             break;
         case 'uk':
         case 'ch':
@@ -226,12 +219,10 @@ KRAJ_RADIO_BUTTONY.change((event) => {
             EXPORT_RADIO_NIE.prop('checked', false);
             EXPORT_RADIO_TAK.prop('checked', false);
             KRAJ_INNY_INPUT.prop('disabled', false).css('display', 'inline-block');
-            przelacznikListyExpress(true);
             break;
         default:
             EXPORT_KONTENER.hide();
             EXPORT_RADIO_NIE.prop('checked', true);
-            przelacznikListyExpress(false);
             break;
     }
 });
@@ -244,17 +235,6 @@ KWOTA_ZAMOWIENIA.change((event) => {
 // konwertowanie tresci inputu na wartosc dziesietna, np. 23,2 -> 23,20
 const konwertujNaWalute = (trescInputu) => {
     return (Math.round(trescInputu.replace(',','.') * 100) / 100).toFixed(2).replace('.', ',');
-};
-
-// LISTA EXPRESS - POJAWIANIE/ZNIKANIE
-const przelacznikListyExpress = (boolean) => {
-    if (boolean) {
-        KONTENER_LISTA_EXPRESS.show();
-        $('input[name="lista-express"]').prop('required', 'true');
-    } else {
-        KONTENER_LISTA_EXPRESS.hide();
-        $('input[name="lista-express"]').removeAttr('required');
-    }
 };
 
 // TWORZENIE NOWEJ POLKI
@@ -335,31 +315,62 @@ const renderujAtrybuty = (ksztaltPolki, idNumer) => {
 const renderujReszte = (idNumer) => {
     $('#atrybuty-polki-' + idNumer).append(`
         <p>Materac</p>
-        <label for="${idNumer}-polka-materac-kremowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-kremowy" value="Kremowy" required>Kremowy</label>
-        <label for="${idNumer}-polka-materac-bezowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-bezowy" value="Beżowy" required>Beżowy</label>
-        <label for="${idNumer}-polka-materac-brazowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-brazowy" value="Brązowy" required>Brązowy</label>
-        <label for="${idNumer}-polka-materac-czekoladowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-        <label for="${idNumer}-polka-materac-fioletowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-fioletowy" value="Fioletowy" required>Fioletowy</label>
-        <label for="${idNumer}-polka-materac-czerwony"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czerwony" value="Czerwony" required>Czerwony</label>
-        <label for="${idNumer}-polka-materac-granatowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-granatowy" value="Granatowy" required>Granatowy</label>
-        <label for="${idNumer}-polka-materac-szary"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-szary" value="Szary" required>Szary</label>
-        <label for="${idNumer}-polka-materac-antracytowy"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-antracytowy" value="Antracytowy" required>Antracytowy</label>
-        <label for="${idNumer}-polka-materac-czarny"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-czarny" value="Czarny" required>Czarny</label>
-        <label for="${idNumer}-polka-materac-cappuccino"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-cappuccino" value="Cappucinno" required>Cappucinno</label>
+        <p>grupa DOT</p>
+        <label for="${idNumer}-polka-materac-dot-light-silver-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-light-silver-gray" value="DOT Light Silver-Gray" required>DOT Light Silver-Gray</label>
+        <label for="${idNumer}-polka-materac-dot-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-gray" value="DOT Gray" required>DOT Gray</label>
+        <label for="${idNumer}-polka-materac-dot-dark-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-dark-gray" value="DOT Dark Gray" required>DOT Dark Gray</label>
+        <label for="${idNumer}-polka-materac-dot-cream"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-cream" value="DOT Cream" required>DOT Cream</label>
+        <label for="${idNumer}-polka-materac-dot-beige"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-beige" value="DOT Beige" required>DOT Beige</label>
+        <label for="${idNumer}-polka-materac-dot-mustard"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-mustard" value="DOT Mustard" required>DOT Mustard</label>
+        <label for="${idNumer}-polka-materac-dot-brick-brown"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-brick-brown" value="DOT Brick Brown" required>DOT Brick Brown</label>
+        <label for="${idNumer}-polka-materac-dot-pastel-pink"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-pastel-pink" value="DOT Pastel Pink" required>DOT Pastel Pink</label>
+        <label for="${idNumer}-polka-materac-dot-dark-pastel-pink"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-dark-pastel-pink" value="DOT Dark Pastel Pink" required>DOT Dark Pastel Pink</label>
+        <label for="${idNumer}-polka-materac-dot-dark-chocolate"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-dark-chocolate" value="DOT Dark Chocolate" required>DOT Dark Chocolate</label>
+        <label for="${idNumer}-polka-materac-dot-mint"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-mint" value="DOT Mint" required>DOT Mint</label>
+        <label for="${idNumer}-polka-materac-dot-bottle-green"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-bottle-green" value="DOT Bottle Green" required>DOT Bottle Green</label>
+        <label for="${idNumer}-polka-materac-dot-blue-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-blue-gray" value="DOT Blue-Gray" required>DOT Blue-Gray</label>
+        <label for="${idNumer}-polka-materac-dot-deep-navy-blue"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-deep-navy-blue" value="DOT Deep Navy Blue" required>DOT Deep Navy Blue</label>
+        <label for="${idNumer}-polka-materac-dot-black"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-dot-black" value="DOT Black" required>DOT Black</label>
+        <p>grupa DIOSA</p>
+        <label for="${idNumer}-polka-materac-diosa-cream"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-cream" value="DIOSA Cream" required>DIOSA Cream</label>
+        <label for="${idNumer}-polka-materac-diosa-beige"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-beige" value="DIOSA Beige" required>DIOSA Beige</label>
+        <label for="${idNumer}-polka-materac-diosa-brick-orange"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-brick-orange" value="DIOSA Brick-Orange" required>DIOSA Brick-Orange</label>
+        <label for="${idNumer}-polka-materac-diosa-powder-pink"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-powder-pink" value="DIOSA Powder Pink" required>DIOSA Powder Pink</label>
+        <label for="${idNumer}-polka-materac-diosa-mint"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-mint" value="DIOSA Mint" required>DIOSA Mint</label>
+        <label for="${idNumer}-polka-materac-diosa-sea-green"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-sea-green" value="DIOSA Sea Green" required>DIOSA Sea Green</label>
+        <label for="${idNumer}-polka-materac-diosa-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
+        <label for="${idNumer}-polka-materac-diosa-navy-blue"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
+        <label for="${idNumer}-polka-materac-diosa-graphite"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
         <label for="${idNumer}-polka-materac-inne"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-inne" value="" required>Inny</label>
         <label for="${idNumer}-polka-materac-nie-podano"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-nie-podano" value="" required>Nie podano</label>
+
         <p>Podstawa</p>
-        <label for="${idNumer}-polka-podstawa-kremowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-kremowy" value="Kremowy" required>Kremowy</label>
-        <label for="${idNumer}-polka-podstawa-bezowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-bezowy" value="Beżowy" required>Beżowy</label>
-        <label for="${idNumer}-polka-podstawa-brazowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-brazowy" value="Brązowy" required>Brązowy</label>
-        <label for="${idNumer}-polka-podstawa-czekoladowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-        <label for="${idNumer}-polka-podstawa-fioletowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-fioletowy" value="Fioletowy" required>Fioletowy</label>
-        <label for="${idNumer}-polka-podstawa-czerwony"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czerwony" value="Czerwony" required>Czerwony</label>
-        <label for="${idNumer}-polka-podstawa-granatowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-granatowy" value="Granatowy" required>Granatowy</label>
-        <label for="${idNumer}-polka-podstawa-szary"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-szary" value="Szary" required>Szary</label>
-        <label for="${idNumer}-polka-podstawa-antracytowy"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-antracytowy" value="Antracytowy" required>Antracytowy</label>
-        <label for="${idNumer}-polka-podstawa-czarny"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-czarny" value="Czarny" required>Czarny</label>
-        <label for="${idNumer}-polka-podstawa-cappuccino"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-cappuccino" value="Cappucinno" required>Cappucinno</label>
+        <p>grupa DOT</p>
+        <label for="${idNumer}-polka-podstawa-dot-light-silver-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-light-silver-gray" value="DOT Light Silver-Gray" required>DOT Light Silver-Gray</label>
+        <label for="${idNumer}-polka-podstawa-dot-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-gray" value="DOT Gray" required>DOT Gray</label>
+        <label for="${idNumer}-polka-podstawa-dot-dark-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-dark-gray" value="DOT Dark Gray" required>DOT Dark Gray</label>
+        <label for="${idNumer}-polka-podstawa-dot-cream"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-cream" value="DOT Cream" required>DOT Cream</label>
+        <label for="${idNumer}-polka-podstawa-dot-beige"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-beige" value="DOT Beige" required>DOT Beige</label>
+        <label for="${idNumer}-polka-podstawa-dot-mustard"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-mustard" value="DOT Mustard" required>DOT Mustard</label>
+        <label for="${idNumer}-polka-podstawa-dot-brick-brown"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-brick-brown" value="DOT Brick Brown" required>DOT Brick Brown</label>
+        <label for="${idNumer}-polka-podstawa-dot-pastel-pink"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-pastel-pink" value="DOT Pastel Pink" required>DOT Pastel Pink</label>
+        <label for="${idNumer}-polka-podstawa-dot-dark-pastel-pink"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-dark-pastel-pink" value="DOT Dark Pastel Pink" required>DOT Dark Pastel Pink</label>
+        <label for="${idNumer}-polka-podstawa-dot-dark-chocolate"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-dark-chocolate" value="DOT Dark Chocolate" required>DOT Dark Chocolate</label>
+        <label for="${idNumer}-polka-podstawa-dot-mint"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-mint" value="DOT Mint" required>DOT Mint</label>
+        <label for="${idNumer}-polka-podstawa-dot-bottle-green"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-bottle-green" value="DOT Bottle Green" required>DOT Bottle Green</label>
+        <label for="${idNumer}-polka-podstawa-dot-blue-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-blue-gray" value="DOT Blue-Gray" required>DOT Blue-Gray</label>
+        <label for="${idNumer}-polka-podstawa-dot-deep-navy-blue"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-deep-navy-blue" value="DOT Deep Navy Blue" required>DOT Deep Navy Blue</label>
+        <label for="${idNumer}-polka-podstawa-dot-black"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-dot-black" value="DOT Black" required>DOT Black</label>
+        <p>grupa DIOSA</p>
+        <label for="${idNumer}-polka-podstawa-diosa-cream"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-cream" value="DIOSA Cream" required>DIOSA Cream</label>
+        <label for="${idNumer}-polka-podstawa-diosa-beige"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-beige" value="DIOSA Beige" required>DIOSA Beige</label>
+        <label for="${idNumer}-polka-podstawa-diosa-brick-orange"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-brick-orange" value="DIOSA Brick-Orange" required>DIOSA Brick-Orange</label>
+        <label for="${idNumer}-polka-podstawa-diosa-powder-pink"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-powder-pink" value="DIOSA Powder Pink" required>DIOSA Powder Pink</label>
+        <label for="${idNumer}-polka-podstawa-diosa-mint"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-mint" value="DIOSA Mint" required>DIOSA Mint</label>
+        <label for="${idNumer}-polka-podstawa-diosa-sea-green"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-sea-green" value="DIOSA Sea Green" required>DIOSA Sea Green</label>
+        <label for="${idNumer}-polka-podstawa-diosa-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
+        <label for="${idNumer}-polka-podstawa-diosa-navy-blue"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
+        <label for="${idNumer}-polka-podstawa-diosa-graphite"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
         <label for="${idNumer}-polka-podstawa-inne"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-inne" value="" required>Inna</label>
         <label for="${idNumer}-polka-podstawa-nie-podano"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-nie-podano" value="" required>Nie podano</label>
     `);
@@ -544,6 +555,11 @@ const dodajPrzyciskUsun = (selektor) => {
 // FOCUSOWANIE NA INPUCIE LICZBY POLEK
 const focusNaLiczbe = (selektor) => {
     $(selektor).focus();
+};
+
+// SPRAWDZENIE, CZY LISTA PRODUKTÓW JEST PUSTA
+const sprawdzCzyListaProduktowPusta = () => {
+    return !licznikPolek && !licznikDomkow && !licznikMateracy && !licznikPokrowcow && !licznikStopni && !licznikInnych;
 };
 
 const drukujPDF = () => {
@@ -842,6 +858,10 @@ if (BUTTON_TESTOWY.length) {
 // SUBMIT
 MAIN_FORM.submit((event) => {
     event.preventDefault();
+    if (sprawdzCzyListaProduktowPusta()) {
+        alert('Brak wybranych produktów!');
+        return;
+    }
     drukujPDF();
     PDF.save('Zamówienie ' + dzisiejszaData() + ' ' + ZAMAWIAJACY_INPUT.val());
     wyczyscDaneOperacyjnePDF();
