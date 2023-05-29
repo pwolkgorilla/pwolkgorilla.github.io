@@ -341,6 +341,8 @@ const renderujReszte = (idNumer) => {
         <label for="${idNumer}-polka-materac-diosa-gray"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
         <label for="${idNumer}-polka-materac-diosa-navy-blue"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
         <label for="${idNumer}-polka-materac-diosa-graphite"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
+        <br>
+        <br>
         <label for="${idNumer}-polka-materac-inne"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-inne" value="" required>Inny</label>
         <label for="${idNumer}-polka-materac-nie-podano"><input type="radio" name="${idNumer}-polka-materac" id="${idNumer}-polka-materac-nie-podano" value="" required>Nie podano</label>
 
@@ -371,6 +373,8 @@ const renderujReszte = (idNumer) => {
         <label for="${idNumer}-polka-podstawa-diosa-gray"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
         <label for="${idNumer}-polka-podstawa-diosa-navy-blue"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
         <label for="${idNumer}-polka-podstawa-diosa-graphite"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
+        <br>
+        <br>
         <label for="${idNumer}-polka-podstawa-inne"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-inne" value="" required>Inna</label>
         <label for="${idNumer}-polka-podstawa-nie-podano"><input type="radio" name="${idNumer}-polka-podstawa" id="${idNumer}-polka-podstawa-nie-podano" value="" required>Nie podano</label>
     `);
@@ -398,17 +402,34 @@ const stworzNowyMaterac = () => {
             <label for="${licznikMateracy}-dlugosc-materac-inne"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-materac-inne" value="" required>Inny</label>
             <label for="${licznikMateracy}-dlugosc-materac-nie-podano"><input type="radio" name="${licznikMateracy}-dlugosc-materac" id="${licznikMateracy}-dlugosc-materac-nie-podano" value="" required>Nie podano</label>
             <p>Kolor</p>
-            <label for="${licznikMateracy}-materac-kremowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-kremowy" value="Kremowy" required>Kremowy</label>
-            <label for="${licznikMateracy}-materac-bezowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-bezowy" value="Beżowy" required>Beżowy</label>
-            <label for="${licznikMateracy}-materac-brazowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-brazowy" value="Brązowy" required>Brązowy</label>
-            <label for="${licznikMateracy}-materac-czekoladowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-            <label for="${licznikMateracy}-materac-fioletowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-fioletowy" value="Fioletowy" required>Fioletowy</label>
-            <label for="${licznikMateracy}-materac-czerwony"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czerwony" value="Czerwony" required>Czerwony</label>
-            <label for="${licznikMateracy}-materac-granatowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-granatowy" value="Granatowy" required>Granatowy</label>
-            <label for="${licznikMateracy}-materac-szary"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-szary" value="Szary" required>Szary</label>
-            <label for="${licznikMateracy}-materac-antracytowy"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-antracytowy" value="Antracytowy" required>Antracytowy</label>
-            <label for="${licznikMateracy}-materac-czarny"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-czarny" value="Czarny" required>Czarny</label>
-            <label for="${licznikMateracy}-materac-cappuccino"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-cappuccino" value="Cappucinno" required>Cappucinno</label>
+            <p>grupa DOT</p>
+            <label for="${licznikMateracy}-materac-dot-light-silver-gray"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-light-silver-gray" value="DOT Light Silver-Gray" required>DOT Light Silver-Gray</label>
+            <label for="${licznikMateracy}-materac-dot-gray"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-gray" value="DOT Gray" required>DOT Gray</label>
+            <label for="${licznikMateracy}-materac-dot-dark-gray"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-dark-gray" value="DOT Dark Gray" required>DOT Dark Gray</label>
+            <label for="${licznikMateracy}-materac-dot-cream"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-cream" value="DOT Cream" required>DOT Cream</label>
+            <label for="${licznikMateracy}-materac-dot-beige"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-beige" value="DOT Beige" required>DOT Beige</label>
+            <label for="${licznikMateracy}-materac-dot-mustard"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-mustard" value="DOT Mustard" required>DOT Mustard</label>
+            <label for="${licznikMateracy}-materac-dot-brick-brown"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-brick-brown" value="DOT Brick Brown" required>DOT Brick Brown</label>
+            <label for="${licznikMateracy}-materac-dot-pastel-pink"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-pastel-pink" value="DOT Pastel Pink" required>DOT Pastel Pink</label>
+            <label for="${licznikMateracy}-materac-dot-dark-pastel-pink"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-dark-pastel-pink" value="DOT Dark Pastel Pink" required>DOT Dark Pastel Pink</label>
+            <label for="${licznikMateracy}-materac-dot-dark-chocolate"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-dark-chocolate" value="DOT Dark Chocolate" required>DOT Dark Chocolate</label>
+            <label for="${licznikMateracy}-materac-dot-mint"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-mint" value="DOT Mint" required>DOT Mint</label>
+            <label for="${licznikMateracy}-materac-dot-bottle-green"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-bottle-green" value="DOT Bottle Green" required>DOT Bottle Green</label>
+            <label for="${licznikMateracy}-materac-dot-blue-gray"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-blue-gray" value="DOT Blue-Gray" required>DOT Blue-Gray</label>
+            <label for="${licznikMateracy}-materac-dot-deep-navy-blue"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-deep-navy-blue" value="DOT Deep Navy Blue" required>DOT Deep Navy Blue</label>
+            <label for="${licznikMateracy}-materac-dot-black"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-dot-black" value="DOT Black" required>DOT Black</label>
+            <p>grupa DIOSA</p>
+            <label for="${licznikMateracy}-materac-diosa-cream"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-cream" value="DIOSA Cream" required>DIOSA Cream</label>
+            <label for="${licznikMateracy}-materac-diosa-beige"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-beige" value="DIOSA Beige" required>DIOSA Beige</label>
+            <label for="${licznikMateracy}-materac-diosa-brick-orange"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-brick-orange" value="DIOSA Brick-Orange" required>DIOSA Brick-Orange</label>
+            <label for="${licznikMateracy}-materac-diosa-powder-pink"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-powder-pink" value="DIOSA Powder Pink" required>DIOSA Powder Pink</label>
+            <label for="${licznikMateracy}-materac-diosa-mint"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-mint" value="DIOSA Mint" required>DIOSA Mint</label>
+            <label for="${licznikMateracy}-materac-diosa-sea-green"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-sea-green" value="DIOSA Sea Green" required>DIOSA Sea Green</label>
+            <label for="${licznikMateracy}-materac-diosa-gray"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
+            <label for="${licznikMateracy}-materac-diosa-navy-blue"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
+            <label for="${licznikMateracy}-materac-diosa-graphite"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
+            <br>
+            <br>
             <label for="${licznikMateracy}-materac-inne"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-inne" value="" required>Inny</label>
             <label for="${licznikMateracy}-materac-nie-podano"><input type="radio" name="${licznikMateracy}-materac" id="${licznikMateracy}-materac-nie-podano" value="" required>Nie podano</label>
         </div>
@@ -435,17 +456,34 @@ const stworzNowyPokrowiec = () => {
             <label for="${licznikPokrowcow}-dlugosc-pokrowiec-inne"><input type="radio" name="${licznikPokrowcow}-dlugosc-pokrowiec" id="${licznikPokrowcow}-dlugosc-pokrowiec-inne" value="" required>Inny</label>
             <label for="${licznikPokrowcow}-dlugosc-pokrowiec-nie-podano"><input type="radio" name="${licznikPokrowcow}-dlugosc-pokrowiec" id="${licznikPokrowcow}-dlugosc-pokrowiec-nie-podano" value="" required>Nie podano</label>
             <p>Kolor</p>
-            <label for="${licznikPokrowcow}-pokrowiec-kremowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-kremowy" value="Kremowy" required>Kremowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-bezowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-bezowy" value="Beżowy" required>Beżowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-brazowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-brazowy" value="Brązowy" required>Brązowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-czekoladowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-czekoladowy" value="Czekoladowy" required>Czekoladowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-fioletowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-fioletowy" value="Fioletowy" required>Fioletowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-czerwony"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-czerwony" value="Czerwony" required>Czerwony</label>
-            <label for="${licznikPokrowcow}-pokrowiec-granatowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-granatowy" value="Granatowy" required>Granatowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-szary"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-szary" value="Szary" required>Szary</label>
-            <label for="${licznikPokrowcow}-pokrowiec-antracytowy"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-antracytowy" value="Antracytowy" required>Antracytowy</label>
-            <label for="${licznikPokrowcow}-pokrowiec-czarny"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-czarny" value="Czarny" required>Czarny</label>
-            <label for="${licznikPokrowcow}-pokrowiec-cappuccino"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-cappuccino" value="Cappucinno" required>Cappucinno</label>
+            <p>grupa DOT</p>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-light-silver-gray"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-light-silver-gray" value="DOT Light Silver-Gray" required>DOT Light Silver-Gray</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-gray"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-gray" value="DOT Gray" required>DOT Gray</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-dark-gray"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-dark-gray" value="DOT Dark Gray" required>DOT Dark Gray</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-cream"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-cream" value="DOT Cream" required>DOT Cream</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-beige"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-beige" value="DOT Beige" required>DOT Beige</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-mustard"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-mustard" value="DOT Mustard" required>DOT Mustard</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-brick-brown"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-brick-brown" value="DOT Brick Brown" required>DOT Brick Brown</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-pastel-pink"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-pastel-pink" value="DOT Pastel Pink" required>DOT Pastel Pink</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-dark-pastel-pink"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-dark-pastel-pink" value="DOT Dark Pastel Pink" required>DOT Dark Pastel Pink</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-dark-chocolate"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-dark-chocolate" value="DOT Dark Chocolate" required>DOT Dark Chocolate</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-mint"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-mint" value="DOT Mint" required>DOT Mint</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-bottle-green"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-bottle-green" value="DOT Bottle Green" required>DOT Bottle Green</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-blue-gray"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-blue-gray" value="DOT Blue-Gray" required>DOT Blue-Gray</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-deep-navy-blue"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-deep-navy-blue" value="DOT Deep Navy Blue" required>DOT Deep Navy Blue</label>
+            <label for="${licznikPokrowcow}-pokrowiec-dot-black"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-dot-black" value="DOT Black" required>DOT Black</label>
+            <p>grupa DIOSA</p>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-cream"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-cream" value="DIOSA Cream" required>DIOSA Cream</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-beige"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-beige" value="DIOSA Beige" required>DIOSA Beige</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-brick-orange"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-brick-orange" value="DIOSA Brick-Orange" required>DIOSA Brick-Orange</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-powder-pink"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-powder-pink" value="DIOSA Powder Pink" required>DIOSA Powder Pink</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-mint"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-mint" value="DIOSA Mint" required>DIOSA Mint</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-sea-green"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-sea-green" value="DIOSA Sea Green" required>DIOSA Sea Green</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-gray"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-gray" value="DIOSA Gray" required>DIOSA Gray</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-navy-blue"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-navy-blue" value="DIOSA Navy Blue" required>DIOSA Navy Blue</label>
+            <label for="${licznikPokrowcow}-pokrowiec-diosa-graphite"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-diosa-graphite" value="DIOSA Graphite" required>DIOSA Graphite</label>
+            <br>
+            <br>
             <label for="${licznikPokrowcow}-pokrowiec-inne"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-inne" value="" required>Inny</label>
             <label for="${licznikPokrowcow}-pokrowiec-nie-podano"><input type="radio" name="${licznikPokrowcow}-pokrowiec" id="${licznikPokrowcow}-pokrowiec-nie-podano" value="" required>Nie podano</label>
         </div>
